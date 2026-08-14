@@ -1,0 +1,104 @@
+---
+# Runs on every push (see .github/workflows/ci-cd.yml) — this is the actual
+# CD mechanism, not a one-time provisioning script. Every task is written to
+# be safe to re-run: nothing here assumes it's the first time it's executed.
+- name: Deploy portfolio
+  hosts: all
+  become: true
+  vars:
+    deploy_dir: /opt/portfolio
+    image_repo: "ghcr.io/{{ github_repository }}"
+    caddy_gpg_key: /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+
+  tasks:
+    - name: Install Docker
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Enable and start Docker
+      ansible.builtin.systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    - name: Add deploy user to docker group
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: true
+
+    - name: Install prerequisites for Caddy's apt repo
+      ansible.builtin.apt:
+        name: [debian-keyring, debian-archive-keyring, apt-transport-https, gnupg, curl]
+        state: present
+
+    - name: Add Caddy apt signing key
+      ansible.builtin.shell: |
+        curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' \
+          | gpg --dearmor -o {{ caddy_gpg_key }}
+      args:
+        creates: "{{ caddy_gpg_key }}"
+
+    - name: Add Caddy apt repo
+      ansible.builtin.get_url:
+        url: https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt
+        dest: /etc/apt/sources.list.d/caddy-stable.list
+        mode: "0644"
+        force: false
+      register: caddy_repo
+
+    - name: Update apt cache after adding Caddy repo
+      ansible.builtin.apt:
+        update_cache: true
+      when: caddy_repo.changed
+
+    - name: Install Caddy
+      ansible.builtin.apt:
+        name: caddy
+        state: present
+
+    - name: Deploy Caddyfile
+      ansible.builtin.copy:
+        src: ../Caddyfile
+        dest: /etc/caddy/Caddyfile
+        mode: "0644"
+      notify: Reload caddy
+
+    - name: Ensure Caddy is enabled and running
+      ansible.builtin.systemd:
+        name: caddy
+        enabled: true
+        state: started
+
+    - name: Create deploy directory
+      ansible.builtin.file:
+        path: "{{ deploy_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose.yml
+      ansible.builtin.copy:
+        src: ../docker-compose.yml
+        dest: "{{ deploy_dir }}/docker-compose.yml"
+        mode: "0644"
+
+    - name: Pull image and recreate container ({{ image_tag }})
+      community.docker.docker_compose_v2:
+        project_src: "{{ deploy_dir }}"
+        pull: always
+        recreate: always
+        state: present
+      environment:
+        IMAGE: "{{ image_repo }}"
+        TAG: "{{ image_tag }}"
+
+  handlers:
+    - name: Reload caddy
+      ansible.builtin.systemd:
+        name: caddy
+        state: reloaded

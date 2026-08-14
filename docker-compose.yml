@@ -1,0 +1,14 @@
+# Local dev: `docker compose up --build`
+# VM deploy (via Ansible): `docker compose pull && docker compose up -d`
+#   — pulls the GHCR image built by CI instead of rebuilding on the VM.
+services:
+  web:
+    image: ${IMAGE:-ghcr.io/arsalqazi3/portfolio}:${TAG:-latest}
+    build:
+      context: .
+    container_name: portfolio
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=production

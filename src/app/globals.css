@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #141414;
+  --color-ink-soft: #1f1f1c;
+  --color-offwhite: #e8e3d8;
+  --color-muted: #9b9589;
+  --color-copper: #b87333;
+
+  --font-heading: var(--font-cabinet-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-general-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+::selection {
+  background: var(--color-copper);
+  color: var(--color-ink);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Full-bleed section dividers use 100vw, which on non-overlay scrollbars
+     is wider than the visible viewport. Clip that sliver instead of letting
+     it create a horizontal scrollbar. */
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-ink);
+}
+
+/* Scroll-triggered fade/slide-in. Toggled by IntersectionObserver in ScrollReveal. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
