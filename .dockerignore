@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.claude
+.github
+docs
+ansible
+Caddyfile
+*.md
+npm-debug.log*
+.DS_Store
+.env*

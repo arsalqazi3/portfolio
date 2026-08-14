@@ -1,0 +1,105 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    name: Lint & build check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+  docker:
+    name: Build, scan, and push image
+    needs: test
+    runs-on: ubuntu-latest
+    # Trivy needs to fail the job on CRITICAL findings, which later steps
+    # (push, deploy) must never run after.
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set image tag
+        id: meta
+        run: echo "tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        run: docker build -t local/portfolio:scan .
+
+      - name: Scan image with Trivy
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: local/portfolio:scan
+          format: table
+          severity: CRITICAL
+          exit-code: "1"
+
+      - name: Log in to GHCR
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag and push image
+        if: github.event_name == 'push'
+        run: |
+          IMAGE="${REGISTRY}/${IMAGE_NAME}"
+          IMAGE="${IMAGE,,}"
+          docker tag local/portfolio:scan "${IMAGE}:${{ steps.meta.outputs.tag }}"
+          docker tag local/portfolio:scan "${IMAGE}:latest"
+          docker push "${IMAGE}:${{ steps.meta.outputs.tag }}"
+          docker push "${IMAGE}:latest"
+
+  deploy:
+    name: Deploy to VM
+    needs: docker
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          pipx install --pip-args=--no-cache-dir ansible-core
+          pipx inject ansible-core docker
+          ansible-galaxy collection install -r ansible/requirements.yml
+
+      - name: Configure SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.VM_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Run Ansible deploy playbook
+        env:
+          IMAGE_TAG: ${{ needs.docker.outputs.image_tag }}
+        run: |
+          ansible-playbook ansible/deploy.yml \
+            -i "${{ secrets.VM_HOST }}," \
+            --user ubuntu \
+            --private-key ~/.ssh/deploy_key \
+            --extra-vars "image_tag=${IMAGE_TAG} github_repository=${GITHUB_REPOSITORY,,}"
