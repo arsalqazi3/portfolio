@@ -47,14 +47,14 @@ export default function Contact() {
           </li>
           <li>
             <a
-              href="#"
+              href="https://www.upwork.com/freelancers/~01f940971bff1d657e"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-muted transition-colors duration-300 hover:text-copper"
             >
               <UpworkIcon className="h-4 w-4" />
               Upwork
             </a>
-            {/* TODO: add real Upwork profile URL */}
-            <span className="ml-2 text-xs text-muted/50">(placeholder)</span>
           </li>
         </ul>
       </ScrollReveal>

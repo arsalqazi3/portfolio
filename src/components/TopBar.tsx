@@ -117,9 +117,10 @@ export default function TopBar() {
               </a>
             </li>
             <li>
-              {/* TODO: add real Upwork profile URL */}
               <a
-                href="#"
+                href="https://www.upwork.com/freelancers/~01f940971bff1d657e"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Upwork"
                 className="flex h-8 w-8 items-center justify-center rounded border border-ink-soft text-offwhite/80 transition-all duration-300 hover:border-copper hover:text-copper"
               >
