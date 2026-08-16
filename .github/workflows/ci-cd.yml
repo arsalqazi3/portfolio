@@ -44,20 +44,16 @@ jobs:
         id: meta
         run: echo "tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # The VM is Oracle's Ampere A1 (arm64), not x86_64, so this cross-builds
-      # under emulation rather than natively. Slower than a native build, but
-      # the free tier's arm64 shape is far more capable than the x86 one.
-      - name: Build image (linux/arm64)
+      # The VM is Oracle's E2.1.Micro (x86_64), matching the ubuntu-latest
+      # runner's native architecture, so this builds without emulation.
+      - name: Build image (linux/amd64)
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/arm64
+          platforms: linux/amd64
           load: true
           tags: local/portfolio:scan
 
