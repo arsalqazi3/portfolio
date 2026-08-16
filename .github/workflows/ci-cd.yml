@@ -107,9 +107,11 @@ jobs:
       - name: Run Ansible deploy playbook
         env:
           IMAGE_TAG: ${{ needs.docker.outputs.image_tag }}
+          GHCR_ACTOR: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
         run: |
           ansible-playbook ansible/deploy.yml \
             -i "${{ secrets.VM_HOST }}," \
             --user ubuntu \
             --private-key ~/.ssh/deploy_key \
-            --extra-vars "image_tag=${IMAGE_TAG} github_repository=${GITHUB_REPOSITORY,,}"
+            --extra-vars "image_tag=${IMAGE_TAG} github_repository=${GITHUB_REPOSITORY,,} ghcr_actor=${GHCR_ACTOR} ghcr_token=${GHCR_TOKEN}"

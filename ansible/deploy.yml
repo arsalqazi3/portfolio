@@ -87,6 +87,12 @@
         dest: "{{ deploy_dir }}/docker-compose.yml"
         mode: "0644"
 
+    - name: Log in to GHCR
+      community.docker.docker_login:
+        registry_url: https://ghcr.io
+        username: "{{ ghcr_actor }}"
+        password: "{{ ghcr_token }}"
+
     - name: Pull image and recreate container ({{ image_tag }})
       community.docker.docker_compose_v2:
         project_src: "{{ deploy_dir }}"
