@@ -15,7 +15,7 @@
       ansible.builtin.apt:
         name:
           - docker.io
-          - docker-compose-plugin
+          - docker-compose-v2
         state: present
         update_cache: true
         cache_valid_time: 3600
