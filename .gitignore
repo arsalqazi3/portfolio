@@ -39,6 +39,9 @@ yarn-error.log*
 # personal staging folder for images/video handed off during development
 /picngifs
 
+# local agent/editor config, not part of the shipped project
+/.claude
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
