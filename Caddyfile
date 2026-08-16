@@ -16,3 +16,9 @@ arslanasadqazi.is-a.dev {
 		format json
 	}
 }
+
+# Catch-all for requests that don't match the domain above (e.g. by raw IP),
+# so the site is reachable for review before DNS points at this host.
+:80 {
+	reverse_proxy 127.0.0.1:3000
+}
