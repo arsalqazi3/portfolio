@@ -6,7 +6,7 @@ type ProjectRowProps = {
   title: string;
   status?: "In Progress" | "Completed";
   description: string;
-  stack: string[];
+  stack?: string[];
   /** Internal route (e.g. "/projects/logsense"), external URL, or same-page anchor (e.g. "#deployment"). */
   href?: string;
   linkLabel?: string;
@@ -45,7 +45,9 @@ export default function ProjectRow({
           {title}
         </h3>
         {status && <StatusTag status={status} className="mt-2 block" />}
-        <p className="mt-4 text-xs leading-relaxed text-muted/80">{stack.join(" · ")}</p>
+        {stack && stack.length > 0 && (
+          <p className="mt-4 text-xs leading-relaxed text-muted/80">{stack.join(" · ")}</p>
+        )}
       </div>
 
       <div className="max-w-2xl">

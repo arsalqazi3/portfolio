@@ -46,9 +46,8 @@ export default function ProjectsPage() {
         />
 
         <ProjectRow
-          title="More projects coming soon"
-          description="Currently building a chaos engineering platform on Kubernetes and Terraform."
-          stack={["Kubernetes", "Terraform"]}
+          title="More Work Underway"
+          description="Additional projects are in progress and will be published here as they're ready."
         />
       </div>
     </div>

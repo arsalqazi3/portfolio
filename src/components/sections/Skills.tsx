@@ -1,39 +1,108 @@
 import {
-  siLinux,
   siDocker,
   siKubernetes,
+  siHelm,
   siJenkins,
+  siGithubactions,
+  siArgo,
   siTerraform,
   siAnsible,
+  siSonarqubeserver,
+  siSnyk,
+  siTrivy,
+  siOwasp,
   siPrometheus,
   siGrafana,
-  siHelm,
-  siArgo,
-  siSnyk,
-  siSonarqubeserver,
-  siOwasp,
+  siNginx,
+  siCaddy,
+  siFastapi,
+  siFlask,
+  siGit,
+  siGithub,
+  siLinux,
+  siGnubash,
 } from "simple-icons";
 import ScrollReveal from "@/components/ScrollReveal";
 import SkillTile from "@/components/SkillTile";
 
 type Tool = { name: string; icon?: { path: string; hex: string } };
 
-const DEVOPS_CLOUD: Tool[] = [
-  { name: "Linux", icon: siLinux },
-  { name: "AWS" },
-  { name: "Docker", icon: siDocker },
-  { name: "Kubernetes", icon: siKubernetes },
-  { name: "Jenkins", icon: siJenkins },
-  { name: "Terraform", icon: siTerraform },
-  { name: "Ansible", icon: siAnsible },
-  { name: "Prometheus", icon: siPrometheus },
-  { name: "Grafana", icon: siGrafana },
-  { name: "Helm", icon: siHelm },
-  { name: "ArgoCD", icon: siArgo },
-  { name: "GitOps" },
-  { name: "Snyk", icon: siSnyk },
-  { name: "SonarQube", icon: siSonarqubeserver },
-  { name: "OWASP ZAP", icon: siOwasp },
+type Category = {
+  label: string;
+  caption?: string;
+  tools: Tool[];
+};
+
+const CATEGORIES: Category[] = [
+  {
+    label: "Cloud",
+    caption: "AWS: EC2, S3, IAM, CloudWatch, VPC, ECR, CLI. Oracle Cloud: Ampere ARM VM.",
+    tools: [{ name: "AWS" }, { name: "Oracle Cloud" }],
+  },
+  {
+    label: "CI/CD & IaC",
+    tools: [
+      { name: "Jenkins", icon: siJenkins },
+      { name: "GitHub Actions", icon: siGithubactions },
+      { name: "GitOps" },
+      { name: "ArgoCD", icon: siArgo },
+      { name: "Terraform", icon: siTerraform },
+      { name: "Ansible", icon: siAnsible },
+    ],
+  },
+  {
+    label: "Containers & Orchestration",
+    tools: [
+      { name: "Docker", icon: siDocker },
+      { name: "Kubernetes", icon: siKubernetes },
+      { name: "EKS" },
+      { name: "Helm", icon: siHelm },
+    ],
+  },
+  {
+    label: "DevSecOps",
+    tools: [
+      { name: "SonarQube (SAST)", icon: siSonarqubeserver },
+      { name: "Snyk (SCA)", icon: siSnyk },
+      { name: "Trivy", icon: siTrivy },
+      { name: "gitleaks" },
+      { name: "OWASP ZAP (DAST)", icon: siOwasp },
+    ],
+  },
+  {
+    label: "Monitoring",
+    tools: [
+      { name: "Prometheus", icon: siPrometheus },
+      { name: "Grafana", icon: siGrafana },
+      { name: "Loki" },
+    ],
+  },
+  {
+    label: "Web / Infra",
+    tools: [
+      { name: "Nginx", icon: siNginx },
+      { name: "Caddy", icon: siCaddy },
+      { name: "Certbot" },
+    ],
+  },
+  {
+    label: "Backend",
+    tools: [
+      { name: "FastAPI", icon: siFastapi },
+      { name: "Flask", icon: siFlask },
+      { name: "REST APIs" },
+    ],
+  },
+  {
+    label: "Core Tools",
+    tools: [
+      { name: "Git", icon: siGit },
+      { name: "GitHub", icon: siGithub },
+      { name: "GHCR" },
+      { name: "Linux (Ubuntu)", icon: siLinux },
+      { name: "Bash", icon: siGnubash },
+    ],
+  },
 ];
 
 const CS_FOUNDATIONS = [
@@ -58,19 +127,23 @@ export default function Skills() {
         <h2 className="font-heading text-2xl font-semibold text-offwhite">Skills</h2>
       </ScrollReveal>
 
-      <ScrollReveal delay={60}>
-        <p className="mt-6 font-mono text-xs uppercase tracking-widest text-muted">
-          DevOps &amp; Cloud
-        </p>
-        <p className="mt-1 text-xs text-muted/70">AWS mainly EC2, S3, IAM, and EKS.</p>
-        <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
-          {DEVOPS_CLOUD.map((tool) => (
-            <SkillTile key={tool.name} name={tool.name} icon={tool.icon} />
-          ))}
-        </div>
-      </ScrollReveal>
+      {CATEGORIES.map((category, i) => (
+        <ScrollReveal key={category.label} delay={60 + i * 30}>
+          <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted first:mt-6">
+            {category.label}
+          </p>
+          {category.caption && (
+            <p className="mt-1 text-xs text-muted/70">{category.caption}</p>
+          )}
+          <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6">
+            {category.tools.map((tool) => (
+              <SkillTile key={tool.name} name={tool.name} icon={tool.icon} />
+            ))}
+          </div>
+        </ScrollReveal>
+      ))}
 
-      <ScrollReveal delay={120}>
+      <ScrollReveal delay={60 + CATEGORIES.length * 30}>
         <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">
           Computer Science Foundations
         </p>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EXPERIENCE, getExperience } from "@/data/experience";
 import ImageCollage from "@/components/ImageCollage";
+import { InstagramIcon } from "@/components/icons";
 
 export function generateStaticParams() {
   return EXPERIENCE.map((e) => ({ slug: e.slug }));
@@ -30,7 +31,7 @@ export default async function ExperiencePage(props: PageProps<"/experience/[slug
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
       <Link
-        href="/#leadership"
+        href="/#experience"
         className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
       >
         ← Back to leadership
@@ -39,9 +40,20 @@ export default async function ExperiencePage(props: PageProps<"/experience/[slug
       <h1 className="mt-8 font-heading text-2xl font-semibold text-offwhite sm:text-3xl">
         {item.org}
       </h1>
-      <p className="mt-3 font-mono text-xs uppercase tracking-widest text-muted">
-        {item.role}
-      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <p className="font-mono text-xs uppercase tracking-widest text-muted">{item.role}</p>
+        {item.verifyHref && (
+          <a
+            href={item.verifyHref}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-flex items-center gap-1.5 rounded border border-ink-soft px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted transition-all duration-300 hover:border-copper hover:text-copper"
+          >
+            <InstagramIcon className="h-4 w-4" />
+            Verify
+          </a>
+        )}
+      </div>
 
       {availableImages.length > 0 && (
         <div className="mt-8 max-w-3xl">

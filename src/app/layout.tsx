@@ -29,10 +29,45 @@ const generalSans = localFont({
   ],
 });
 
+const SITE_URL = "https://arslanasadqazi.is-a.dev";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Arslan Asad Qazi, DevOps & Cloud Engineer",
   description:
     "Portfolio of Arslan Asad Qazi, a final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
+  keywords: ["Arslan Asad Qazi", "Arslan Qazi", "Arslan Asad", "DevOps Engineer", "Cloud Engineer", "DevSecOps"],
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Arslan Asad Qazi, DevOps & Cloud Engineer",
+    description:
+      "Portfolio of Arslan Asad Qazi, a final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
+    url: SITE_URL,
+    siteName: "Arslan Asad Qazi",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Arslan Asad Qazi, DevOps & Cloud Engineer",
+    description:
+      "Portfolio of Arslan Asad Qazi, a final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Arslan Asad Qazi",
+  alternateName: ["Arslan Qazi", "Arslan Asad"],
+  url: SITE_URL,
+  jobTitle: "DevOps & Cloud Engineer",
+  description:
+    "Final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
+  sameAs: [
+    "https://github.com/arsalqazi3",
+    "https://www.linkedin.com/in/arslanasadqazi123/",
+    "https://www.upwork.com/freelancers/~01f940971bff1d657e",
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -42,6 +77,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${jetbrainsMono.variable} ${cabinetGrotesk.variable} ${generalSans.variable} antialiased`}
     >
       <body className="bg-ink text-offwhite font-body">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <TopBar />
         {children}
       </body>

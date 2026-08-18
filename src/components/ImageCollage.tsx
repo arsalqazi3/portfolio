@@ -12,7 +12,17 @@ type ImageCollageProps = {
  * sharp at any screen size. */
 export default function ImageCollage({ images, basePath, alt }: ImageCollageProps) {
   const [base, ...accents] = images;
-  const rotations = ["-4deg", "5deg", "-6deg"];
+  const rotations = ["-4deg", "5deg", "-6deg", "3deg"];
+  // Two accents sit flush left/right; three or more fan out evenly across
+  // the base's lower edge instead, shrinking a bit so they don't collide.
+  const accentWidth = accents.length >= 3 ? 30 : 38;
+  const accentLeft = (i: number) => {
+    if (accents.length <= 2) return i === 0 ? 2 : 100 - 2 - accentWidth;
+    const start = 2;
+    const end = 100 - 2 - accentWidth;
+    const step = (end - start) / (accents.length - 1);
+    return start + i * step;
+  };
 
   if (accents.length === 0) {
     return (
@@ -49,11 +59,11 @@ export default function ImageCollage({ images, basePath, alt }: ImageCollageProp
       {accents.map((image, i) => (
         <div
           key={image}
-          className="absolute w-[42%] sm:w-[38%]"
+          className="absolute"
           style={{
             bottom: "-2.5rem",
-            left: i === 0 ? "2%" : undefined,
-            right: i === 1 ? "2%" : undefined,
+            left: `${accentLeft(i)}%`,
+            width: `${accentWidth}%`,
             transform: `rotate(${rotations[i]})`,
             zIndex: i + 1,
           }}
