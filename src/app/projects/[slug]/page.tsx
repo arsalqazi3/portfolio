@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
 import StatusTag from "@/components/StatusTag";
 import DemoVideo from "@/components/DemoVideo";
+import BackLink from "@/components/BackLink";
 import { GithubIcon } from "@/components/icons";
 
 export function generateStaticParams() {
@@ -27,12 +27,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
-      <Link
-        href="/#projects"
-        className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
-      >
-        ← Back to projects
-      </Link>
+      <BackLink fallbackHref="/#projects">← Back to projects</BackLink>
 
       <div className="mt-8 flex flex-wrap items-center gap-3">
         <h1 className="font-heading text-2xl font-semibold text-offwhite sm:text-3xl">

@@ -7,6 +7,8 @@ export type Experience = {
   devopsConnection: string;
   /** Filenames at public/leadership/<image>, in display order. */
   images?: string[];
+  /** Filename of a featured portrait shown uncropped, standing apart from the collage. */
+  standoutImage?: string;
   /** Link to a public post confirming the role (e.g. an official announcement). */
   verifyHref?: string;
 };
@@ -24,7 +26,8 @@ export const EXPERIENCE: Experience[] = [
     ],
     devopsConnection:
       "Running UI/UX for an event platform isn't that different from running a deployment: a team depending on your part landing on time, a deadline that doesn't move, and constant coordination with people who don't share your exact priorities. Staying in sync with developers while leading design is the same coordination muscle DevOps work leans on.",
-    images: ["procom1.jpg", "procom2.jpg", "procom3.jpg", "procom4.jpg"],
+    images: ["procom1.jpg", "procom2.jpg", "procom3.jpg"],
+    standoutImage: "procom4.jpg",
     verifyHref: "https://www.instagram.com/p/DSIJVoHjPyU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
   },
   {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import TitleRule from "@/components/TitleRule";
+import BackLink from "@/components/BackLink";
 import { CERTIFICATIONS } from "@/data/certifications";
 
 export const metadata: Metadata = { title: "Certifications, Arslan Asad Qazi" };
@@ -9,12 +10,7 @@ export const metadata: Metadata = { title: "Certifications, Arslan Asad Qazi" };
 export default function CertificationsPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
-      <Link
-        href="/"
-        className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
-      >
-        ← Back to home
-      </Link>
+      <BackLink fallbackHref="/">← Back to home</BackLink>
 
       <h1 className="mt-8 font-heading text-3xl font-semibold text-offwhite sm:text-4xl">
         Certifications

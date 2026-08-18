@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 import TopBar from "@/components/TopBar";
 import "./globals.css";
 
@@ -80,6 +81,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "be3147a492364a2f8e1d26fc357d4eb7"}'
+          strategy="afterInteractive"
         />
         <TopBar />
         {children}

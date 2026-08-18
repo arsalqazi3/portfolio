@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EXPERIENCE, getExperience } from "@/data/experience";
 import ImageCollage from "@/components/ImageCollage";
+import BackLink from "@/components/BackLink";
 import { InstagramIcon } from "@/components/icons";
 
 export function generateStaticParams() {
@@ -27,15 +27,13 @@ export default async function ExperiencePage(props: PageProps<"/experience/[slug
   const availableImages = (item.images ?? []).filter((image) =>
     existsSync(path.join(process.cwd(), "public", "leadership", image))
   );
+  const hasStandout =
+    item.standoutImage &&
+    existsSync(path.join(process.cwd(), "public", "leadership", item.standoutImage));
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
-      <Link
-        href="/#experience"
-        className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
-      >
-        ← Back to leadership
-      </Link>
+      <BackLink fallbackHref="/#experience">← Back to leadership</BackLink>
 
       <h1 className="mt-8 font-heading text-2xl font-semibold text-offwhite sm:text-3xl">
         {item.org}
@@ -55,9 +53,22 @@ export default async function ExperiencePage(props: PageProps<"/experience/[slug
         )}
       </div>
 
-      {availableImages.length > 0 && (
-        <div className="mt-8 max-w-3xl">
-          <ImageCollage images={availableImages} basePath="/leadership" alt={item.org} />
+      {(availableImages.length > 0 || hasStandout) && (
+        <div className="mt-8 flex flex-col items-start gap-8 md:flex-row md:items-end">
+          {availableImages.length > 0 && (
+            <div className="w-full max-w-3xl md:flex-1">
+              <ImageCollage images={availableImages} basePath="/leadership" alt={item.org} />
+            </div>
+          )}
+          {hasStandout && (
+            <div className="w-full shrink-0 md:w-56">
+              <ImageCollage
+                images={[item.standoutImage!]}
+                basePath="/leadership"
+                alt={`${item.org} official announcement`}
+              />
+            </div>
+          )}
         </div>
       )}
 
