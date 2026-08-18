@@ -4,10 +4,11 @@ type StatusTagProps = {
 };
 
 export default function StatusTag({ status, className = "" }: StatusTagProps) {
-  const color = status === "In Progress" ? "text-copper" : "text-muted";
+  // A finished project is the assumed default; only the exception is worth flagging.
+  if (status !== "In Progress") return null;
 
   return (
-    <span className={`font-mono text-[11px] uppercase tracking-widest ${color} ${className}`}>
+    <span className={`font-mono text-[11px] uppercase tracking-widest text-copper ${className}`}>
       {status}
     </span>
   );

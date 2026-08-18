@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EXPERIENCE, getExperience } from "@/data/experience";
 import ImageCollage from "@/components/ImageCollage";
-import BackLink from "@/components/BackLink";
 import { InstagramIcon } from "@/components/icons";
 
 export function generateStaticParams() {
@@ -33,7 +33,12 @@ export default async function ExperiencePage(props: PageProps<"/experience/[slug
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
-      <BackLink fallbackHref="/#experience">← Back to leadership</BackLink>
+      <Link
+        href="/#experience"
+        className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
+      >
+        ← Back to leadership
+      </Link>
 
       <h1 className="mt-8 font-heading text-2xl font-semibold text-offwhite sm:text-3xl">
         {item.org}

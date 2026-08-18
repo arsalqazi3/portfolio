@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CERTIFICATIONS, getCertification } from "@/data/certifications";
 import { ArrowUpRightIcon } from "@/components/icons";
-import BackLink from "@/components/BackLink";
 
 export function generateStaticParams() {
   return CERTIFICATIONS.map((c) => ({ slug: c.slug }));
@@ -24,7 +24,12 @@ export default async function CertificationPage(props: PageProps<"/certification
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
-      <BackLink fallbackHref="/#certifications">← Back to certifications</BackLink>
+      <Link
+        href="/#certifications"
+        className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
+      >
+        ← Back to certifications
+      </Link>
 
       <h1 className="mt-8 font-heading text-2xl font-semibold text-offwhite sm:text-3xl">
         {cert.title}

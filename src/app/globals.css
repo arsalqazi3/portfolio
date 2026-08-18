@@ -29,6 +29,13 @@ body {
   background: var(--color-ink);
 }
 
+/* Tailwind v4 dropped the old default pointer cursor on <button>, matching
+   native browser behavior. Restore it for anything actually clickable. */
+button:not(:disabled),
+[role="button"] {
+  cursor: pointer;
+}
+
 /* Scroll-triggered fade/slide-in. Toggled by IntersectionObserver in ScrollReveal. */
 .reveal {
   opacity: 0;
