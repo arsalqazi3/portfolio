@@ -4,18 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GithubIcon, LinkedinIcon, MailIcon, UpworkIcon } from "./icons";
-
-type NavItem = { label: string } & ({ id: string } | { href: string });
-
-const NAV_ITEMS: NavItem[] = [
-  { id: "about", label: "About" },
-  { href: "/experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { href: "/projects", label: "Projects" },
-  { id: "deployment", label: "Deploy" },
-  { href: "/certifications", label: "Certs" },
-  { id: "contact", label: "Contact" },
-];
+import { NAV_ITEMS } from "@/data/nav";
 
 export default function TopBar() {
   const pathname = usePathname();
