@@ -122,7 +122,7 @@ const CS_FOUNDATIONS = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="border-t border-ink-soft py-10 sm:py-14">
+    <section id="skills" className="scroll-mt-40 border-t border-ink-soft py-10 sm:scroll-mt-24 sm:py-14">
       <ScrollReveal>
         <h2 className="font-heading text-2xl font-semibold text-offwhite">Skills</h2>
       </ScrollReveal>

@@ -7,7 +7,7 @@ import { CERTIFICATIONS } from "@/data/certifications";
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="border-t border-ink-soft py-14 sm:py-20">
+    <section id="certifications" className="scroll-mt-40 border-t border-ink-soft py-14 sm:scroll-mt-24 sm:py-20">
       <ScrollReveal>
         <Link href="/certifications" className="group inline-block">
           <h2 className="font-heading text-2xl font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper sm:text-3xl">

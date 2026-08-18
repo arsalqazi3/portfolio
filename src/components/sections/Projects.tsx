@@ -6,7 +6,7 @@ import { PROJECTS } from "@/data/projects";
 
 export default function Projects() {
   return (
-    <section id="projects" className="border-t border-ink-soft py-14 sm:py-20">
+    <section id="projects" className="scroll-mt-40 border-t border-ink-soft py-14 sm:scroll-mt-24 sm:py-20">
       <ScrollReveal>
         <Link href="/projects" className="group inline-block">
           <h2 className="font-heading text-3xl font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper sm:text-4xl">

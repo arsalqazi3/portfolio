@@ -4,6 +4,7 @@ import TitleRule from "./TitleRule";
 import { ArrowUpRightIcon, GithubIcon } from "./icons";
 
 type ProjectRowProps = {
+  id?: string;
   title: string;
   status?: "In Progress" | "Completed";
   description: string;
@@ -17,6 +18,7 @@ type ProjectRowProps = {
 };
 
 export default function ProjectRow({
+  id,
   title,
   status,
   description,
@@ -33,7 +35,8 @@ export default function ProjectRow({
 
   return (
     <div
-      className={`group relative grid gap-3 py-8 transition-colors duration-300 sm:grid-cols-[200px_1fr] sm:gap-10 ${
+      id={id}
+      className={`group relative grid scroll-mt-40 gap-3 py-8 transition-colors duration-300 sm:scroll-mt-24 sm:grid-cols-[200px_1fr] sm:gap-10 ${
         first ? "pt-0" : "border-t border-ink-soft"
       } ${isClickable ? "-mx-4 rounded px-4 hover:bg-ink-soft/20" : ""}`}
     >

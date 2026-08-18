@@ -12,7 +12,12 @@ export default function ExperiencePage() {
       <BackLink fallbackHref="/">← Back to home</BackLink>
 
       <div className="mt-8 flex gap-12">
-        <HubSidebar />
+        <HubSidebar
+          items={[
+            ...EXPERIENCE.map((item) => ({ label: item.org, id: item.slug })),
+            { label: "Open to Internship Roles", id: "internships" },
+          ]}
+        />
 
         <div className="min-w-0 flex-1">
           <h1 className="font-heading text-3xl font-semibold text-offwhite sm:text-4xl">
@@ -26,6 +31,7 @@ export default function ExperiencePage() {
             {EXPERIENCE.map((item, i) => (
               <ProjectRow
                 key={item.slug}
+                id={item.slug}
                 first={i === 0}
                 href={`/experience/${item.slug}`}
                 linkLabel="Read more"
@@ -34,6 +40,20 @@ export default function ExperiencePage() {
                 stack={[item.role]}
               />
             ))}
+          </div>
+
+          <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">
+            Internships
+          </p>
+          <div className="mt-3">
+            <ProjectRow
+              id="internships"
+              first
+              href="/#contact"
+              linkLabel="Get in touch"
+              title="Open to Internship Roles"
+              description="Looking for a DevOps, Cloud, or DevSecOps internship where I can put what I've built here to work on real infrastructure."
+            />
           </div>
         </div>
       </div>

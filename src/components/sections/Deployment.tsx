@@ -4,7 +4,7 @@ const STEPS = ["Docker", "GitHub Actions", "Trivy", "GHCR", "Ansible", "Caddy"];
 
 export default function Deployment() {
   return (
-    <section id="deployment" className="border-t border-ink-soft py-14 sm:py-20">
+    <section id="deployment" className="scroll-mt-40 border-t border-ink-soft py-14 sm:scroll-mt-24 sm:py-20">
       <ScrollReveal>
         <h2 className="font-heading text-2xl font-semibold text-offwhite sm:text-3xl">
           How this is deployed

@@ -14,7 +14,7 @@ export default function CertificationsPage() {
       <BackLink fallbackHref="/">← Back to home</BackLink>
 
       <div className="mt-8 flex gap-12">
-        <HubSidebar />
+        <HubSidebar items={CERTIFICATIONS.map((c) => ({ label: c.title, id: c.slug }))} />
 
         <div className="min-w-0 flex-1">
           <h1 className="font-heading text-3xl font-semibold text-offwhite sm:text-4xl">
@@ -28,8 +28,9 @@ export default function CertificationsPage() {
             {CERTIFICATIONS.map((cert, i) => (
               <Link
                 key={cert.slug}
+                id={cert.slug}
                 href={`/certifications/${cert.slug}`}
-                className={`group -mx-4 grid gap-4 rounded px-4 py-6 transition-colors duration-300 hover:bg-ink-soft/20 sm:grid-cols-[140px_1fr] sm:gap-6 ${
+                className={`group -mx-4 grid scroll-mt-40 gap-4 rounded px-4 py-6 transition-colors duration-300 hover:bg-ink-soft/20 sm:scroll-mt-24 sm:grid-cols-[140px_1fr] sm:gap-6 ${
                   i === 0 ? "" : "border-t border-ink-soft"
                 }`}
               >

@@ -2,7 +2,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 
 export default function About() {
   return (
-    <section id="about" className="border-t border-ink-soft py-12 sm:py-16">
+    <section id="about" className="scroll-mt-40 border-t border-ink-soft py-12 sm:scroll-mt-24 sm:py-16">
       <ScrollReveal>
         <h2 className="font-heading text-2xl font-semibold text-offwhite">About</h2>
         <div className="mt-5 max-w-2xl space-y-4 text-sm leading-relaxed text-muted sm:text-base">

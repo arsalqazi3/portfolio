@@ -14,13 +14,16 @@ export default function Experience() {
           </h2>
         </Link>
         <p className="mt-3 max-w-xl text-sm text-muted sm:text-base">
-          Leadership roles alongside the technical work.
+          Leadership roles alongside the technical work, and what I&apos;m looking for next.
         </p>
       </ScrollReveal>
 
-      <div className="mt-8">
+      <ScrollReveal delay={30}>
+        <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">Leadership</p>
+      </ScrollReveal>
+      <div className="mt-3">
         {EXPERIENCE.slice(0, 3).map((item, i) => (
-          <ScrollReveal key={item.slug} delay={i * 60}>
+          <ScrollReveal key={item.slug} delay={60 + i * 60}>
             <ProjectRow
               first={i === 0}
               href={`/experience/${item.slug}`}
@@ -31,6 +34,21 @@ export default function Experience() {
             />
           </ScrollReveal>
         ))}
+      </div>
+
+      <ScrollReveal delay={240}>
+        <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">Internships</p>
+      </ScrollReveal>
+      <div className="mt-3">
+        <ScrollReveal delay={270}>
+          <ProjectRow
+            first
+            href="#contact"
+            linkLabel="Get in touch"
+            title="Open to Internship Roles"
+            description="Looking for a DevOps, Cloud, or DevSecOps internship where I can put what I've built here to work on real infrastructure."
+          />
+        </ScrollReveal>
       </div>
 
       <ScrollReveal>

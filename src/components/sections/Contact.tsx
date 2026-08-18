@@ -3,7 +3,7 @@ import { GithubIcon, LinkedinIcon, MailIcon, UpworkIcon } from "@/components/ico
 
 export default function Contact() {
   return (
-    <section id="contact" className="border-t border-ink-soft py-16 sm:py-24">
+    <section id="contact" className="scroll-mt-40 border-t border-ink-soft py-16 sm:scroll-mt-24 sm:py-24">
       <ScrollReveal>
         <h2 className="font-heading text-2xl font-semibold text-offwhite sm:text-3xl">
           Contact
