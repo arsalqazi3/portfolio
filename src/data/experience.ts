@@ -36,6 +36,7 @@ export const EXPERIENCE: Experience[] = [
     ],
     devopsConnection:
       "Teaching a process to a room of 25 to 30 students means breaking it into steps someone else can actually follow without you standing next to them. That's the same instinct behind writing a deploy runbook or documenting a pipeline: if only you can run it, it doesn't scale.",
+    images: ["dsc1.jpg"],
   },
 ];
 

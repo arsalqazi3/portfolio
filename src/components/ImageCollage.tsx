@@ -14,6 +14,24 @@ export default function ImageCollage({ images, basePath, alt }: ImageCollageProp
   const [base, ...accents] = images;
   const rotations = ["-4deg", "5deg", "-6deg"];
 
+  if (accents.length === 0) {
+    return (
+      <div className="relative mx-auto w-full max-w-xs">
+        <div className="relative aspect-[4/5] overflow-hidden rounded border-4 border-offwhite shadow-[0_12px_32px_-8px_rgba(0,0,0,0.5)]">
+          <Image
+            src={`${basePath}/${base}`}
+            alt={alt}
+            fill
+            sizes="(min-width: 768px) 320px, 60vw"
+            quality={95}
+            className="object-cover"
+            priority
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative" style={{ marginBottom: accents.length ? "3.5rem" : 0 }}>
       <div className="relative aspect-video w-full overflow-hidden rounded border-4 border-offwhite shadow-[0_12px_32px_-8px_rgba(0,0,0,0.5)]">
