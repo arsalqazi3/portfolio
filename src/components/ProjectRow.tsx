@@ -1,5 +1,6 @@
 import Link from "next/link";
 import StatusTag from "./StatusTag";
+import TitleRule from "./TitleRule";
 import { ArrowUpRightIcon, GithubIcon } from "./icons";
 
 type ProjectRowProps = {
@@ -38,10 +39,11 @@ export default function ProjectRow({
     >
       <div>
         <h3
-          className={`font-heading text-lg font-semibold text-offwhite transition-colors duration-300 ${
+          className={`flex items-center gap-2.5 font-heading text-lg font-semibold text-offwhite transition-colors duration-300 ${
             isClickable ? "group-hover:text-copper" : ""
           }`}
         >
+          <TitleRule />
           {title}
         </h3>
         {status && <StatusTag status={status} className="mt-2 block" />}

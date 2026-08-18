@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import TitleRule from "@/components/TitleRule";
 import { CERTIFICATIONS } from "@/data/certifications";
 
 export const metadata: Metadata = { title: "Certifications, Arslan Asad Qazi" };
@@ -42,7 +43,8 @@ export default function CertificationsPage() {
             </div>
 
             <div>
-              <h3 className="font-heading text-base font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper sm:text-lg">
+              <h3 className="flex items-center gap-2.5 font-heading text-base font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper sm:text-lg">
+                <TitleRule />
                 {cert.title}
               </h3>
               <p className="mt-1 font-mono text-xs text-muted">

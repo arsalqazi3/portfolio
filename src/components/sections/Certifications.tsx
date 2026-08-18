@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
+import TitleRule from "@/components/TitleRule";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { CERTIFICATIONS } from "@/data/certifications";
 
@@ -38,7 +39,8 @@ export default function Certifications() {
               </div>
 
               <div>
-                <h3 className="font-heading text-base font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper sm:text-lg">
+                <h3 className="flex items-center gap-2.5 font-heading text-base font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper sm:text-lg">
+                  <TitleRule />
                   {cert.title}
                 </h3>
                 <p className="mt-1 font-mono text-xs text-muted">
