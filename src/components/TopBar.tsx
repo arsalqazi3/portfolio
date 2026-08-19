@@ -64,6 +64,9 @@ export default function TopBar() {
   return (
     <header className="sticky top-0 z-10 w-full border-b border-ink-soft bg-ink">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 sm:px-8 lg:px-12">
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- intentionally
+            a plain anchor so the same-page click handler owns scrolling outright,
+            without next/link's own navigation/scroll handling fighting it */}
         <a
           href="/#top"
           onClick={(e) => handleAnchorClick(e, "top")}
