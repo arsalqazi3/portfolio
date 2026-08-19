@@ -6,7 +6,7 @@ import { EXPERIENCE } from "@/data/experience";
 
 export default function Experience() {
   return (
-    <section id="experience" className="border-t border-ink-soft py-12 sm:py-16">
+    <section id="experience" className="scroll-mt-40 border-t border-ink-soft py-12 sm:scroll-mt-24 sm:py-16">
       <ScrollReveal>
         <Link href="/experience" className="group inline-block">
           <h2 className="font-heading text-2xl font-semibold text-offwhite transition-colors duration-300 group-hover:text-copper">

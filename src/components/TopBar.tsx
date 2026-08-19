@@ -11,15 +11,14 @@ export default function TopBar() {
   const isHome = pathname === "/";
   const [active, setActive] = useState<string>("about");
 
+  // Tracks every homepage section (including ones whose nav item links out to
+  // a dedicated hub page) so the nav can highlight whichever is in view.
   useEffect(() => {
     if (!isHome) return;
 
-    const anchorIds = NAV_ITEMS.filter((item): item is { id: string; label: string } => "id" in item).map(
-      (item) => item.id
+    const sections = NAV_ITEMS.map((item) => document.getElementById(item.sectionId)).filter(
+      (el): el is HTMLElement => el !== null
     );
-    const sections = anchorIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,23 +35,55 @@ export default function TopBar() {
     return () => observer.disconnect();
   }, [isHome]);
 
+  // Client-side route transitions don't trigger the browser's native
+  // "scroll to #hash" behavior, so arriving at "/#section" from elsewhere
+  // (e.g. a "Back to X" link on another page) needs a manual scroll once
+  // the homepage has actually mounted.
+  useEffect(() => {
+    if (!isHome) return;
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth" }));
+  }, [isHome]);
+
+  // When already on the homepage, scroll directly instead of round-tripping
+  // through a Link navigation (which wouldn't auto-scroll on a same-route
+  // hash change either).
+  const handleAnchorClick = (e: React.MouseEvent, sectionId: string) => {
+    if (!isHome) return;
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: "smooth" });
+    window.history.pushState(null, "", `/#${sectionId}`);
+    setActive(sectionId);
+  };
+
   return (
     <header className="sticky top-0 z-10 w-full border-b border-ink-soft bg-ink">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 sm:px-8 lg:px-12">
-        <Link href="/#top" className="font-heading text-base font-semibold text-offwhite">
+        <Link
+          href="/#top"
+          onClick={(e) => handleAnchorClick(e, "top")}
+          className="font-heading text-base font-semibold text-offwhite"
+        >
           Arslan Asad Qazi
         </Link>
 
         <nav className="order-3 w-full sm:order-2 sm:w-auto" aria-label="In-page">
           <ul className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs uppercase tracking-widest">
             {NAV_ITEMS.map((item) => {
-              const isPage = "href" in item;
-              const href = isPage ? item.href : `/#${item.id}`;
-              const isActive = isPage ? pathname.startsWith(item.href) : isHome && active === item.id;
+              const isAnchorItem = item.href.startsWith("/#");
+              const isActive = isHome
+                ? active === item.sectionId
+                : !isAnchorItem && pathname.startsWith(item.href);
               return (
                 <li key={item.label}>
                   <Link
-                    href={href}
+                    href={item.href}
+                    onClick={isAnchorItem ? (e) => handleAnchorClick(e, item.sectionId) : undefined}
                     className={`transition-colors duration-300 ${
                       isActive ? "text-copper" : "text-muted hover:text-offwhite"
                     }`}
