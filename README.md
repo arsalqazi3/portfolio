@@ -1,4 +1,4 @@
-# Arslan Qazi — Portfolio
+# Arslan Asad Qazi — Portfolio
 
 Personal portfolio, built to also work as a working example of the DevOps
 practices it talks about: containerized, scanned, and deployed through a
@@ -76,4 +76,9 @@ CI/CD is handled by [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml)
 5. Run [`ansible/deploy.yml`](ansible/deploy.yml) over SSH against the VM,
    which pulls the new image, recreates the container, and reloads Caddy.
 
-Required repository secrets: `VM_HOST`, `VM_SSH_KEY`.
+Required repository secrets:
+
+- `VM_HOST` — the VM's public IP
+- `VM_SSH_KEY` — private key for the deploy user
+- `GHCR_PULL_TOKEN` — a classic PAT with `read:packages`, used by Ansible to
+  log in to GHCR on the VM before pulling (the image is private)
