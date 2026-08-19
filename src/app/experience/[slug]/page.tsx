@@ -34,10 +34,10 @@ export default async function ExperiencePage(props: PageProps<"/experience/[slug
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
       <Link
-        href="/#experience"
+        href="/experience"
         className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
       >
-        ← Back to leadership
+        ← Back to experience
       </Link>
 
       <h1 className="mt-8 font-heading text-2xl font-semibold text-offwhite sm:text-3xl">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GithubIcon, LinkedinIcon, MailIcon, UpworkIcon } from "./icons";
 import { NAV_ITEMS } from "@/data/nav";
@@ -87,19 +86,13 @@ export default function TopBar() {
               }`;
               return (
                 <li key={item.label}>
-                  {isAnchorItem ? (
-                    <a
-                      href={item.href}
-                      onClick={(e) => handleAnchorClick(e, item.sectionId)}
-                      className={className}
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <Link href={item.href} className={className}>
-                      {item.label}
-                    </Link>
-                  )}
+                  <a
+                    href={item.href}
+                    onClick={isAnchorItem ? (e) => handleAnchorClick(e, item.sectionId) : undefined}
+                    className={className}
+                  >
+                    {item.label}
+                  </a>
                 </li>
               );
             })}

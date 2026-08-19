@@ -25,7 +25,7 @@ export default async function CertificationPage(props: PageProps<"/certification
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
       <Link
-        href="/#certifications"
+        href="/certifications"
         className="font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-copper"
       >
         ← Back to certifications
