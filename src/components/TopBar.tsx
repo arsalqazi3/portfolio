@@ -56,21 +56,21 @@ export default function TopBar() {
     const el = document.getElementById(sectionId);
     if (!el) return;
     e.preventDefault();
-    el.scrollIntoView({ behavior: "smooth" });
     window.history.pushState(null, "", `/#${sectionId}`);
     setActive(sectionId);
+    requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth" }));
   };
 
   return (
     <header className="sticky top-0 z-10 w-full border-b border-ink-soft bg-ink">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 sm:px-8 lg:px-12">
-        <Link
+        <a
           href="/#top"
           onClick={(e) => handleAnchorClick(e, "top")}
           className="font-heading text-base font-semibold text-offwhite"
         >
           Arslan Asad Qazi
-        </Link>
+        </a>
 
         <nav className="order-3 w-full sm:order-2 sm:w-auto" aria-label="In-page">
           <ul className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs uppercase tracking-widest">
@@ -79,17 +79,24 @@ export default function TopBar() {
               const isActive = isHome
                 ? active === item.sectionId
                 : !isAnchorItem && pathname.startsWith(item.href);
+              const className = `transition-colors duration-300 ${
+                isActive ? "text-copper" : "text-muted hover:text-offwhite"
+              }`;
               return (
                 <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={isAnchorItem ? (e) => handleAnchorClick(e, item.sectionId) : undefined}
-                    className={`transition-colors duration-300 ${
-                      isActive ? "text-copper" : "text-muted hover:text-offwhite"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
+                  {isAnchorItem ? (
+                    <a
+                      href={item.href}
+                      onClick={(e) => handleAnchorClick(e, item.sectionId)}
+                      className={className}
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link href={item.href} className={className}>
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               );
             })}
