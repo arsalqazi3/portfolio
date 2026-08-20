@@ -41,6 +41,8 @@ yarn-error.log*
 
 # local agent/editor config, not part of the shipped project
 /.claude
+/CLAUDE.md
+/AGENTS.md
 
 # typescript
 *.tsbuildinfo
