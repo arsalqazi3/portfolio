@@ -1,6 +1,6 @@
 import ScrollReveal from "@/components/ScrollReveal";
 
-const STEPS = ["Docker", "GitHub Actions", "Trivy", "GHCR", "Ansible", "Caddy"];
+const STEPS = ["GitHub Actions", "Lint + Build", "Trivy", "Vercel"];
 
 export default function Deployment() {
   return (
@@ -11,32 +11,30 @@ export default function Deployment() {
         </h2>
         <div className="mt-5 max-w-2xl space-y-4 text-sm leading-relaxed text-muted sm:text-base">
           <p>
-            This site runs through an actual deployment pipeline rather than
-            a static export pushed to a CDN. Every push to main works
-            through tests, a Docker build, a Trivy vulnerability scan, and a
-            push to GHCR before a deploy is even attempted.
+            This originally ran on a self-hosted pipeline: every push built a
+            Docker image, scanned it with Trivy, pushed it to GHCR, then an
+            Ansible playbook SSHed into a single Oracle Cloud VM to pull and
+            recreate the container, with Caddy handling the reverse proxy
+            and HTTPS. That setup worked well for weeks.
           </p>
           <p>
-            The container image is built once and tagged with the commit
-            SHA, then pushed to GitHub Container Registry, which sits next
-            to the code and reuses GitHub auth instead of a separate
-            registry account. An Ansible playbook handles the actual
-            deploy: it runs on every push, SSHes into a single Oracle Cloud
-            VM, pulls the new image, and recreates the container.
+            It moved to Vercel after Oracle&apos;s free tier locked the
+            account over a routine card verification charge, with no
+            reliable way to recover access in a reasonable time. For a
+            portfolio site that needs to actually stay up, that&apos;s not
+            an acceptable failure mode, so the trade-off flipped: managing
+            the VM myself stopped being worth the reliability risk.
           </p>
           <p>
-            Caddy sits in front of the container as a reverse proxy and
-            handles HTTPS automatically for arslanasadqazi.is-a.dev, with no
-            separate Certbot cron job to maintain. There&apos;s no Terraform
-            here either, because provisioning a single VM by hand in the
-            Oracle console is simpler than writing infrastructure as code
-            for one resource. That trade-off flips once there&apos;s more
-            than one thing to provision.
+            The self-hosted path isn&apos;t gone, it&apos;s just not what
+            serves this site right now. The Dockerfile, Ansible playbook,
+            and Caddy config are still in the repo and still tested in CI
+            (build, lint, Trivy scan on every push), they just don&apos;t
+            deploy anywhere at the moment.
           </p>
           <p className="text-xs text-muted/70">
-            The full reasoning behind each of these choices is written up as
-            ADRs in <code className="text-copper">docs/adr/</code> in the
-            repo.
+            The full reasoning is written up as ADRs in{" "}
+            <code className="text-copper">docs/adr/</code> in the repo.
           </p>
         </div>
       </ScrollReveal>
@@ -45,7 +43,7 @@ export default function Deployment() {
         <p
           className="max-w-2xl font-mono text-xs leading-loose text-muted sm:text-sm"
           role="img"
-          aria-label={`Deploy pipeline: ${STEPS.join(" then ")}, then live on Oracle Cloud`}
+          aria-label={`Deploy pipeline: ${STEPS.join(" then ")}, then live on Vercel`}
         >
           {STEPS.map((step, i) => (
             <span key={step}>

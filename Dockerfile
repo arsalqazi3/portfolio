@@ -9,6 +9,7 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ENV DOCKER_BUILD=true
 RUN npm run build
 
 # --- runner: minimal runtime image, no build tools or source ---

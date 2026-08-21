@@ -54,8 +54,8 @@ export default function ProjectsPage() {
               title="This Portfolio"
               href="/#deployment"
               linkLabel="See how this site is deployed"
-              description="You're looking at it. A live case study in the practices below: containerized, scanned, and deployed through its own pipeline."
-              stack={["Docker", "GitHub Actions", "Trivy", "GHCR", "Ansible", "Caddy", "Oracle Cloud"]}
+              description="You're looking at it. Built, linted, and scanned through its own CI pipeline on every push, deployed on Vercel."
+              stack={["GitHub Actions", "Trivy", "Vercel", "Docker (CI-only)"]}
             />
 
             <ProjectRow

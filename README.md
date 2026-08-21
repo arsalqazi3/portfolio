@@ -1,39 +1,25 @@
 # Arslan Asad Qazi — Portfolio
 
-Personal portfolio, built to also work as a working example of the DevOps
-practices it talks about: containerized, scanned, and deployed through a
-real pipeline rather than a one-click hosting button.
+Personal portfolio, also built to double as a working example of the
+DevOps practices it talks about.
 
 Live at [arslanasadqazi.is-a.dev](https://arslanasadqazi.is-a.dev) — see
-the "How This Is Deployed" section on the site itself for the write-up.
+the "How This Is Deployed" section on the site itself for the full story,
+including why it moved off self-hosting.
 
 ## Stack
 
 - **App**: Next.js (App Router) + TypeScript + Tailwind CSS
-- **Container**: Docker, multi-stage build, `output: "standalone"`
-- **CI**: GitHub Actions — lint, build, Trivy scan, push to GHCR
-- **CD**: Ansible — runs on every push, not just once at setup
-- **Reverse proxy / TLS**: Caddy
-- **Host**: a single Oracle Cloud compute VM
+- **CI**: GitHub Actions — lint, build, and a Docker build + Trivy scan
+  (validates the self-hosted path still builds cleanly; doesn't push or
+  deploy anywhere)
+- **Host**: Vercel
 
-Why each of these and not the alternatives is written up in
-[`docs/adr/`](docs/adr/).
-
-## Architecture
-
-```mermaid
-flowchart LR
-    A[Push to main] --> B[GitHub Actions]
-    B --> C[Lint + build]
-    C --> D[Docker build]
-    D --> E[Trivy scan]
-    E -->|CRITICAL found| F[Fail build]
-    E -->|clean| G[Push image to GHCR]
-    G --> H[Ansible: SSH deploy]
-    H --> I[Pull image + recreate container]
-    I --> J[Caddy: reverse proxy + TLS]
-    J --> K[arslanasadqazi.is-a.dev]
-```
+Originally self-hosted on a single Oracle Cloud VM behind Caddy, deployed
+by an Ansible playbook on every push. That setup and the reasoning behind
+it — and why it changed — is written up in [`docs/adr/`](docs/adr/). The
+Dockerfile, Ansible playbook, and Caddy config are all still in this repo
+and still exercised in CI, just not deployed anywhere right now.
 
 ## Local development
 
@@ -48,7 +34,7 @@ npm run dev
 docker build -t portfolio .
 docker run -p 3000:3000 portfolio
 
-# or, for local dev / VM deploy parity:
+# or:
 docker compose up --build
 ```
 
@@ -57,28 +43,22 @@ docker compose up --build
 ```
 src/                  Next.js app (App Router)
 docs/adr/             Architecture decision records
-ansible/deploy.yml    Deploy playbook — runs on every push
-Caddyfile             Reverse proxy + automatic HTTPS config
+ansible/deploy.yml    Self-hosted deploy playbook (not currently in use)
+Caddyfile             Reverse proxy + automatic HTTPS config (not currently in use)
 Dockerfile            Multi-stage build for a small runtime image
-docker-compose.yml    Used both for local dev and on the VM
-.github/workflows/    CI/CD pipeline
+docker-compose.yml    Used for local dev and by the (currently unused) VM setup
+.github/workflows/    CI pipeline — lint, build, Docker build + Trivy scan
 ```
 
-## Deployment
+## CI
 
-CI/CD is handled by [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml):
+[`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml) runs on every
+push and pull request:
 
 1. Lint and build the app.
-2. Build the Docker image.
-3. Scan it with [Trivy](https://github.com/aquasecurity/trivy) — the build
-   fails on any CRITICAL vulnerability.
-4. Push the image to GHCR, tagged with the commit SHA.
-5. Run [`ansible/deploy.yml`](ansible/deploy.yml) over SSH against the VM,
-   which pulls the new image, recreates the container, and reloads Caddy.
+2. Build the Docker image and scan it with
+   [Trivy](https://github.com/aquasecurity/trivy) — fails on any CRITICAL
+   vulnerability.
 
-Required repository secrets:
-
-- `VM_HOST` — the VM's public IP
-- `VM_SSH_KEY` — private key for the deploy user
-- `GHCR_PULL_TOKEN` — a classic PAT with `read:packages`, used by Ansible to
-  log in to GHCR on the VM before pulling (the image is private)
+Deployment itself is handled by Vercel's own GitHub integration, outside
+this workflow.
