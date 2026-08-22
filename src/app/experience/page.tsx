@@ -20,7 +20,7 @@ export default function ExperiencePage() {
         <HubSidebar
           items={[
             ...EXPERIENCE.map((item) => ({ label: item.org, id: item.slug })),
-            { label: "Open to Internship Roles", id: "internships" },
+            { label: "Open to Internships & Full-Time Roles", id: "internships" },
           ]}
         />
 
@@ -47,17 +47,14 @@ export default function ExperiencePage() {
             ))}
           </div>
 
-          <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">
-            Internships
-          </p>
-          <div className="mt-3">
+          <div className="mt-8">
             <ProjectRow
               id="internships"
               first
               href="/#contact"
               linkLabel="Get in touch"
-              title="Open to Internship Roles"
-              description="Looking for a DevOps, Cloud, or DevSecOps internship where I can put what I've built here to work on real infrastructure."
+              title="Open to Internships & Full-Time Roles"
+              description="Looking for a DevOps, Cloud, or DevSecOps role — internship or full-time — where I can put what I've built here to work on real infrastructure."
             />
           </div>
         </div>

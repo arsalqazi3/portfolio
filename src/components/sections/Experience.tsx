@@ -36,17 +36,14 @@ export default function Experience() {
         ))}
       </div>
 
-      <ScrollReveal delay={240}>
-        <p className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">Internships</p>
-      </ScrollReveal>
-      <div className="mt-3">
+      <div className="mt-8">
         <ScrollReveal delay={270}>
           <ProjectRow
             first
             href="#contact"
             linkLabel="Get in touch"
-            title="Open to Internship Roles"
-            description="Looking for a DevOps, Cloud, or DevSecOps internship where I can put what I've built here to work on real infrastructure."
+            title="Open to Internships & Full-Time Roles"
+            description="Looking for a DevOps, Cloud, or DevSecOps role — internship or full-time — where I can put what I've built here to work on real infrastructure."
           />
         </ScrollReveal>
       </div>
