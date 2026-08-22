@@ -54,7 +54,7 @@ export default function ExperiencePage() {
               href="/#contact"
               linkLabel="Get in touch"
               title="Open to New Opportunities"
-              description="Looking for a DevOps, Cloud, or DevSecOps roles, where I can put what I've built here to work on real infrastructure."
+              description="Looking for DevOps, Cloud, or DevSecOps roles, where I can put what I've built here to work on real infrastructure."
             />
           </div>
         </div>
