@@ -30,6 +30,7 @@ export default function Projects() {
               description={project.summary}
               stack={project.stack}
               repoHref={project.repoHref}
+              dockerHref={project.dockerHref}
             />
           </ScrollReveal>
         ))}

@@ -6,8 +6,11 @@ export type Project = {
   description: string[];
   stack: string[];
   repoHref?: string;
+  dockerHref?: string;
   done?: string[];
   remaining?: string[];
+  /** Standout bullet points for a completed project's detail page. */
+  highlights?: string[];
   /** Filename to look for at public/demos/<demoFile>. None uploaded yet. */
   demoFile: string;
 };
@@ -31,24 +34,35 @@ export const PROJECTS: Project[] = [
   {
     slug: "sentinelforge",
     title: "SentinelForge",
-    status: "In Progress",
-    summary:
-      "A secure CI/CD pipeline with scanning and gating built into every stage.",
+    status: "Completed",
+    summary: "A DevSecOps pipeline that blocks vulnerable code before it ships.",
     description: [
-      "SentinelForge is an exercise in building a CI/CD pipeline where security scanning actually blocks a bad build: a critical vulnerability, a leaked secret, a failing test all stop the pipeline instead of sailing through.",
-      "Jenkins orchestrates the pipeline stages. SonarQube runs static analysis (SAST) against the codebase. Trivy scans the built container image for known vulnerabilities. Snyk covers dependency scanning (SCA) so vulnerable packages get caught before they ship. Docker packages the app, and AWS is the target deployment environment.",
-      "A GitLeaks pre-commit hook already stops secrets from ever reaching a commit in the first place, and the Flask demo app has a pytest suite (5 passing tests) so the pipeline has something real to build, test, and scan end to end.",
+      "SentinelForge is a CI/CD pipeline I built to actually learn how security fits into DevOps, not just read about it. It wraps a small Flask app in a full pipeline that tests the code, scans it for bugs and secrets, checks every dependency for known vulnerabilities, builds a Docker image, scans that image too, and only then pushes it and deploys it live. If anything looks unsafe at any step, the pipeline stops right there.",
+      "The stack is Jenkins, SonarQube, Snyk, and Trivy, all wired together and running on AWS EC2. I didn't just set these tools up and hope they worked. I proved it. For each security gate, I broke something on purpose, watched the pipeline correctly block it, then fixed the problem and confirmed it recovered. That fail-then-pass proof is documented with real screenshots for every single gate.",
+      "Most of the real work here wasn't writing pipeline steps. It was debugging real infrastructure problems: giving Jenkins access to Docker, losing installed tools every time a container got rebuilt (which pushed me to build a custom Jenkins image with everything baked in), tracking down credential mismatches, and understanding why SonarQube's quality gate wasn't catching what I expected it to.",
     ],
-    stack: ["Jenkins", "SonarQube", "Trivy", "Snyk", "Docker", "AWS"],
+    stack: [
+      "Jenkins",
+      "SonarQube",
+      "Snyk",
+      "Trivy",
+      "Docker",
+      "Docker Hub",
+      "AWS EC2",
+      "Flask",
+      "Python",
+      "pytest",
+      "GitHub Actions webhook",
+      "gitleaks",
+    ],
     repoHref: "https://github.com/arsalqazi3/SentinelForge",
-    done: [
-      "Flask demo app",
-      "pytest suite (5 passing tests)",
-      "hardened Dockerfile",
-      "GitLeaks pre-commit hook",
-      "architecture diagram",
+    dockerHref: "https://hub.docker.com/r/arslanasadqazi/sentinelforge",
+    highlights: [
+      "Every security gate proven to actually block bad code, not just report on it",
+      "Custom Jenkins Docker image built to solve a real tool-persistence bug",
+      "Generates a Software Bill of Materials (SBOM) and a combined security report on every run",
+      "Honest documentation of real limitations, including exactly why one gate is currently relaxed and what that means",
     ],
-    remaining: ["Jenkins pipeline setup", "scanner integration", "EC2 deployment"],
     demoFile: "sentinelforge.mp4",
   },
 ];

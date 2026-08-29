@@ -46,6 +46,7 @@ export default function ProjectsPage() {
                 description={project.summary}
                 stack={project.stack}
                 repoHref={project.repoHref}
+                dockerHref={project.dockerHref}
               />
             ))}
 

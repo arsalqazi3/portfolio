@@ -1,7 +1,7 @@
 import Link from "next/link";
 import StatusTag from "./StatusTag";
 import TitleRule from "./TitleRule";
-import { ArrowUpRightIcon, GithubIcon } from "./icons";
+import { ArrowUpRightIcon, DockerIcon, GithubIcon } from "./icons";
 
 type ProjectRowProps = {
   id?: string;
@@ -13,6 +13,7 @@ type ProjectRowProps = {
   href?: string;
   linkLabel?: string;
   repoHref?: string;
+  dockerHref?: string;
   children?: React.ReactNode;
   first?: boolean;
 };
@@ -26,6 +27,7 @@ export default function ProjectRow({
   href,
   linkLabel = "View project",
   repoHref,
+  dockerHref,
   children,
   first = false,
 }: ProjectRowProps) {
@@ -77,6 +79,18 @@ export default function ProjectRow({
             >
               <GithubIcon className="h-4 w-4" />
               GitHub
+            </a>
+          )}
+          {dockerHref && (
+            <a
+              href={dockerHref}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={`${title} on Docker Hub`}
+              className="relative z-20 inline-flex items-center gap-1.5 rounded border border-ink-soft px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted transition-all duration-300 hover:border-copper hover:text-copper"
+            >
+              <DockerIcon className="h-4 w-4" />
+              Docker Hub
             </a>
           )}
         </div>

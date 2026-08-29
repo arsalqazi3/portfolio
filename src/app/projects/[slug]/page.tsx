@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
 import StatusTag from "@/components/StatusTag";
 import DemoVideo from "@/components/DemoVideo";
-import { GithubIcon } from "@/components/icons";
+import { DockerIcon, GithubIcon } from "@/components/icons";
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -43,16 +43,31 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
 
       <p className="mt-3 text-sm leading-relaxed text-muted/80">{project.stack.join(" · ")}</p>
 
-      {project.repoHref && (
-        <a
-          href={project.repoHref}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="mt-5 inline-flex items-center gap-1.5 rounded border border-ink-soft px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted transition-all duration-300 hover:border-copper hover:text-copper"
-        >
-          <GithubIcon className="h-4 w-4" />
-          View on GitHub
-        </a>
+      {(project.repoHref || project.dockerHref) && (
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          {project.repoHref && (
+            <a
+              href={project.repoHref}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1.5 rounded border border-ink-soft px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted transition-all duration-300 hover:border-copper hover:text-copper"
+            >
+              <GithubIcon className="h-4 w-4" />
+              View on GitHub
+            </a>
+          )}
+          {project.dockerHref && (
+            <a
+              href={project.dockerHref}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1.5 rounded border border-ink-soft px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted transition-all duration-300 hover:border-copper hover:text-copper"
+            >
+              <DockerIcon className="h-4 w-4" />
+              View on Docker Hub
+            </a>
+          )}
+        </div>
       )}
 
       <div className="mt-8 max-w-2xl space-y-4 text-sm leading-relaxed text-muted sm:text-base">
@@ -60,6 +75,20 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
           <p key={paragraph.slice(0, 24)}>{paragraph}</p>
         ))}
       </div>
+
+      {project.highlights && (
+        <div className="mt-8 max-w-2xl">
+          <p className="text-xs text-muted/70">Highlights</p>
+          <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-muted sm:text-base">
+            {project.highlights.map((item) => (
+              <li key={item} className="flex gap-2.5">
+                <span className="mt-2 h-1 w-1 flex-none rounded-full bg-copper" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {(project.done || project.remaining) && (
         <div className="mt-8 grid max-w-2xl gap-6 text-xs leading-relaxed sm:grid-cols-2 sm:text-sm">
