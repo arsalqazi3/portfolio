@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import TopBar from "@/components/TopBar";
+import WebMeshBackground from "@/components/WebMeshBackground";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -87,8 +88,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           data-cf-beacon='{"token": "be3147a492364a2f8e1d26fc357d4eb7"}'
           strategy="afterInteractive"
         />
-        <TopBar />
-        {children}
+        <WebMeshBackground />
+        <div className="relative z-10">
+          <TopBar />
+          {children}
+        </div>
       </body>
     </html>
   );
