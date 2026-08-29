@@ -36,7 +36,6 @@ type Category = {
 const CATEGORIES: Category[] = [
   {
     label: "Cloud",
-    caption: "AWS: EC2, S3, IAM, CloudWatch, VPC, ECR, CLI. Oracle Cloud: Ampere ARM VM.",
     tools: [{ name: "AWS" }, { name: "Oracle Cloud" }],
   },
   {

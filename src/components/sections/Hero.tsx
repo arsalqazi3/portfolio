@@ -11,8 +11,9 @@ export default function Hero() {
           </p>
           <h1 className="mt-3 font-heading text-2xl leading-snug text-offwhite sm:text-3xl lg:text-4xl">
             I&apos;m <span className="text-copper">Arslan Asad Qazi</span>, and
-            I build the pipelines that get code from a commit to production
-            without breaking or leaking anything along the way.
+            I build, secure, and deploy the systems that get code from a
+            commit to production without breaking or leaking anything along
+            the way.
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             Final-year Computer Science student at FAST-NUCES Karachi,
