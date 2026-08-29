@@ -4,8 +4,11 @@ import { useEffect, useRef } from "react";
 
 const MUTED = "155,149,137"; // --color-muted
 const COPPER = "184,115,51"; // --color-copper
-const MAX_LINK_DIST = 150;
+const MAX_LINK_DIST = 165;
 const NEAR_RADIUS = 170;
+/** Below this width delta, a resize is treated as mobile browser-chrome
+ * (address bar) show/hide, not a real layout change, so nodes aren't reset. */
+const WIDTH_CHANGE_THRESHOLD = 60;
 
 type Node = { x: number; y: number; vx: number; vy: number };
 
@@ -28,31 +31,57 @@ export default function WebMeshBackground() {
     let height = 0;
     let nodes: Node[] = [];
     let rafId = 0;
+    let resizeTimer = 0;
     const mouse = { x: -9999, y: -9999 };
 
     function nodeCountFor(w: number) {
-      if (w < 640) return 16;
-      if (w < 1024) return 26;
-      return 38;
+      if (w < 640) return 20;
+      if (w < 1024) return 32;
+      return 46;
     }
 
-    function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas!.width = width * dpr;
-      canvas!.height = height * dpr;
-      canvas!.style.width = `${width}px`;
-      canvas!.style.height = `${height}px`;
-      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      const count = nodeCountFor(width);
+    function seedNodes(w: number, h: number) {
+      const count = nodeCountFor(w);
       nodes = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
+        x: Math.random() * w,
+        y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.25,
         vy: (Math.random() - 0.5) * 0.25,
       }));
+    }
+
+    function applyCanvasSize(w: number, h: number) {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas!.width = w * dpr;
+      canvas!.height = h * dpr;
+      canvas!.style.width = `${w}px`;
+      canvas!.style.height = `${h}px`;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function resize(isInitial: boolean) {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      const widthChanged = Math.abs(newWidth - width) > WIDTH_CHANGE_THRESHOLD;
+
+      width = newWidth;
+      height = newHeight;
+      applyCanvasSize(width, height);
+
+      // A pure height change (mobile address bar show/hide while scrolling)
+      // just needs the canvas resized, not the whole mesh re-randomized.
+      if (isInitial || widthChanged || nodes.length === 0) {
+        seedNodes(width, height);
+      } else {
+        for (const n of nodes) {
+          n.y = Math.min(n.y, height);
+        }
+      }
+    }
+
+    function onResize() {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => resize(false), 150);
     }
 
     function onPointerMove(e: PointerEvent) {
@@ -85,11 +114,11 @@ export default function WebMeshBackground() {
           const midY = (nodes[a].y + nodes[b].y) / 2;
           const mdist = Math.hypot(midX - mouse.x, midY - mouse.y);
           const near = Math.max(0, 1 - mdist / NEAR_RADIUS);
-          const restOpacity = (1 - dist / MAX_LINK_DIST) * 0.1;
-          const opacity = restOpacity + near * 0.5;
+          const restOpacity = (1 - dist / MAX_LINK_DIST) * 0.22;
+          const opacity = restOpacity + near * 0.55;
 
           ctx!.strokeStyle = near > 0.25 ? `rgba(${COPPER},${opacity.toFixed(2)})` : `rgba(${MUTED},${opacity.toFixed(2)})`;
-          ctx!.lineWidth = 1 + near * 1.1;
+          ctx!.lineWidth = 1.1 + near * 1.1;
           ctx!.beginPath();
           ctx!.moveTo(nodes[a].x, nodes[a].y);
           ctx!.lineTo(nodes[b].x, nodes[b].y);
@@ -100,15 +129,16 @@ export default function WebMeshBackground() {
       rafId = requestAnimationFrame(step);
     }
 
-    resize();
-    window.addEventListener("resize", resize);
+    resize(true);
+    window.addEventListener("resize", onResize);
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerleave", onPointerLeave);
     rafId = requestAnimationFrame(step);
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", resize);
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerleave", onPointerLeave);
     };
