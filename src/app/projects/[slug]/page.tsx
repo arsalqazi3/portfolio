@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
 import StatusTag from "@/components/StatusTag";
 import DemoVideo from "@/components/DemoVideo";
+import ProofGallery from "@/components/ProofGallery";
 import { DockerIcon, GithubIcon } from "@/components/icons";
 
 export function generateStaticParams() {
@@ -24,6 +25,9 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   if (!project) notFound();
 
   const hasDemo = existsSync(path.join(process.cwd(), "public", "demos", project.demoFile));
+  const availableProofs = (project.proofs ?? []).filter((proof) =>
+    existsSync(path.join(process.cwd(), "public", "proofs", project.slug, proof.file))
+  );
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14 sm:px-8 sm:py-20 lg:px-12">
@@ -87,6 +91,15 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {availableProofs.length > 0 && (
+        <div className="mt-10">
+          <p className="font-mono text-xs uppercase tracking-widest text-copper">Proof</p>
+          <div className="mt-3">
+            <ProofGallery images={availableProofs} basePath={`/proofs/${project.slug}`} alt={project.title} />
+          </div>
         </div>
       )}
 

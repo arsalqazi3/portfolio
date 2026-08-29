@@ -11,6 +11,8 @@ export type Project = {
   remaining?: string[];
   /** Standout bullet points for a completed project's detail page. */
   highlights?: string[];
+  /** Ordered screenshot proof, rendered as a horizontal scroll strip. Filenames live at public/proofs/<slug>/<file>. */
+  proofs?: { file: string; caption: string }[];
   /** Filename to look for at public/demos/<demoFile>. None uploaded yet. */
   demoFile: string;
 };
@@ -62,6 +64,22 @@ export const PROJECTS: Project[] = [
       "Custom Jenkins Docker image built to solve a real tool-persistence bug",
       "Generates a Software Bill of Materials (SBOM) and a combined security report on every run",
       "Honest documentation of real limitations, including exactly why one gate is currently relaxed and what that means",
+    ],
+    proofs: [
+      { file: "01-sonarqube-fail-jenkins.png", caption: "SonarQube gate blocks the Jenkins build" },
+      { file: "02-sonarqube-issue-detail.png", caption: "The exact issue SonarQube caught" },
+      { file: "03-sonarqube-fail-sonarqube.png", caption: "Failed quality gate in SonarQube itself" },
+      { file: "04-sonarqube-pass-jenkins.png", caption: "Fixed, Jenkins build passes the gate" },
+      { file: "05-sonarqube-pass-sonarqube.png", caption: "Quality gate passed in SonarQube" },
+      { file: "06-trivy-fail-stage.png", caption: "Trivy stage fails the pipeline on a vulnerable image" },
+      { file: "07-trivy-fail-vulnerabilities.png", caption: "The vulnerabilities Trivy flagged" },
+      { file: "08-trivy-pass-stage.png", caption: "Fixed, Trivy stage passes" },
+      { file: "09-trivy-pass-vulnerabilities.png", caption: "Clean scan after the fix" },
+      { file: "10-snyk-fail.png", caption: "Snyk blocks a vulnerable dependency" },
+      { file: "11-snyk-pass.png", caption: "Dependency updated, Snyk passes" },
+      { file: "12-aggregate-report.png", caption: "Combined security report generated every run" },
+      { file: "13-dockerhub-repo.png", caption: "Image published to Docker Hub" },
+      { file: "14-curl-success.png", caption: "Live app responding after deploy" },
     ],
     demoFile: "sentinelforge.mp4",
   },
