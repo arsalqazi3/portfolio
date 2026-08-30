@@ -27,7 +27,7 @@ import SkillTile from "@/components/SkillTile";
 
 type Tool = {
   name: string;
-  icon?: { path: string; hex: string } | { markup: string; viewBox: string };
+  icon?: { path: string; hex: string } | { markup: string; viewBox: string } | { img: string };
 };
 
 // Official multi-color logos that aren't in Simple Icons (AWS and Oracle keep their
