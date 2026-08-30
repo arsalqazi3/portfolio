@@ -69,7 +69,7 @@ export default function TopBar() {
         <a
           href="/#top"
           onClick={(e) => handleAnchorClick(e, "top")}
-          className="font-heading text-base font-semibold text-offwhite"
+          className="font-heading text-base font-semibold text-offwhite transition-colors duration-300 hover:text-copper"
         >
           Arslan Asad Qazi
         </a>
