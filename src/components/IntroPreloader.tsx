@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const SESSION_KEY = "intro-preloader-played";
 const COUNTER_MS = 850;
 const COUNTER_STEP_MS = 9; // ~100 steps across COUNTER_MS
 const COUNTER_FADE_MS = 350;
@@ -11,10 +10,13 @@ const UNDERLINE_DELAY_MS = 280;
 const CURTAIN_DELAY_MS = 1250;
 const CURTAIN_MS = 850;
 
-/** A one-time, full-viewport entrance: a percentage counter loads in, clears to
- * the name (with its underline drawing in), then the whole curtain lifts away
- * to reveal the real page underneath. Plays once per browser session and skips
- * itself entirely under prefers-reduced-motion.
+/** A full-viewport entrance: a percentage counter loads in, clears to the name
+ * (with its underline drawing in), then the whole curtain lifts away to reveal
+ * the real page underneath. Lives in the root layout, which the App Router
+ * only remounts on an actual full page load — so this naturally replays on a
+ * real reload but stays out of the way on ordinary in-app link navigation,
+ * with no session/storage bookkeeping needed. Skips itself entirely under
+ * prefers-reduced-motion.
  *
  * Deliberately avoids requestAnimationFrame for state changes — some
  * unfocused/backgrounded tab states throttle rAF to a near-stop, which would
@@ -31,15 +33,13 @@ export default function IntroPreloader() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const alreadyPlayed = sessionStorage.getItem(SESSION_KEY);
-    if (reduceMotion || alreadyPlayed) return;
+    if (reduceMotion) return;
 
     const timerIds = timers.current;
 
-    sessionStorage.setItem(SESSION_KEY, "true");
-    // sessionStorage/matchMedia only exist client-side, so this can't be read
-    // during a lazy useState initializer without diverging from the server's
-    // render (a hydration mismatch) — it has to happen post-mount, in an effect.
+    // matchMedia only exists client-side, so this can't be read during a lazy
+    // useState initializer without diverging from the server's render (a
+    // hydration mismatch) — it has to happen post-mount, in an effect.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setShouldPlay(true);
     document.body.style.overflow = "hidden";
