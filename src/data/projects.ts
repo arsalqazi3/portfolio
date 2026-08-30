@@ -25,11 +25,12 @@ export const PROJECTS: Project[] = [
     summary:
       "FastAPI backend running Z-score based anomaly detection, paired with a Next.js dashboard. Deployed on AWS EC2 with Docker and GitHub Actions CI/CD.",
     description: [
-      "LogSense watches incoming log data and flags entries that fall outside a normal statistical range. It uses a Z-score based approach: each value gets compared against the recent mean and standard deviation, and anything far enough from the norm gets flagged as a potential anomaly.",
-      "The backend is built with FastAPI and exposes the anomaly detection logic as an API. A Next.js dashboard sits on top of it, so the flagged anomalies actually show up somewhere readable.",
-      "The whole thing runs in a Docker container on AWS EC2, with GitHub Actions handling build and deploy on every push, the same CI/CD discipline used across the rest of this portfolio's projects.",
+      "LogSense is a full-stack app I built with my team to catch weird behavior in system logs before it turns into a real problem. It watches a stream of logs, tracks things like error rate and batch size over a rolling window, and uses a Z-score based statistical engine to spot when something looks off. No machine learning model, no training data needed. It just learns what normal looks like and flags what doesn't fit.",
+      "On top of the statistics sits a rule-based AI agent that decides how serious an anomaly actually is. It weighs different signals against each other, an empty batch, an all-errors batch, a high or medium Z-score, and gives back a plain-language reason for its verdict: normal, warning, or critical.",
+      "The backend is FastAPI, the dashboard is Next.js and polls for new alerts every 5 seconds so you can watch things update live. The whole thing runs on Docker and Docker Compose, deployed to AWS EC2 with Nginx and HTTPS, shipped through a GitHub Actions CI/CD pipeline.",
+      "I owned deployment and infrastructure on this one. My teammate Ammar Hussain built the backend and AI agent logic, and Hassaan worked on the CI/CD side with me. We also benchmarked LogSense against a plain fixed-threshold detector using the public HDFS log dataset, to prove it actually catches more with fewer false alarms, not just that it runs.",
     ],
-    stack: ["FastAPI", "Next.js", "Docker", "AWS EC2", "GitHub Actions"],
+    stack: ["FastAPI", "Next.js", "Docker", "Docker Compose", "AWS EC2", "Nginx", "GitHub Actions"],
     repoHref: "https://github.com/AmmarHussain00/logsense",
     demoFile: "logsense.mp4",
   },

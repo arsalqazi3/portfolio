@@ -37,11 +37,11 @@ export const EXPERIENCE: Experience[] = [
     summary:
       "Co-led UI/UX at the Developer's Student Club and co-taught wireframing and lo-fi prototyping to about 25 to 30 students, in person and virtually.",
     description: [
-      "At the Developer's Student Club, Arslan co-led the UI/UX track and worked as an instructor, teaching wireframing and lo-fi prototyping to about 25 to 30 students.",
-      "Sessions ran both in person and virtually, which meant the material had to hold up on its own, without him in the room to walk people through it individually.",
+      "At the Developer's Student Club, I co-led the UI/UX track and worked as an instructor, teaching wireframing and lo-fi prototyping to about 25 to 30 students.",
+      "We ran two sessions, one in person and one virtual, and split the teaching between myself and my co-lead. Together we covered wireframing and lo-fi prototyping across both sessions, giving students a hands-on introduction to how real design work starts.",
     ],
     devopsConnection:
-      "Teaching a process to a room of 25 to 30 students means breaking it into steps someone else can actually follow without you standing next to them. That's the same instinct behind writing a deploy runbook or documenting a pipeline: if only you can run it, it doesn't scale.",
+      "Teaching a process to a room of 25 to 30 students means breaking it into steps someone else can actually follow, without you standing next to them. That's the same instinct behind writing a deploy runbook or documenting a pipeline. If only you can run it, it doesn't scale.",
     images: ["dsc1.jpg"],
     verifyHref: "https://www.instagram.com/p/DHgwtYlNp-7/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
   },
