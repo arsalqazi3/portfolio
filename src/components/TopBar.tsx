@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GithubIcon, LinkedinIcon, MailIcon, UpworkIcon } from "./icons";
 import { NAV_ITEMS } from "@/data/nav";
@@ -63,16 +64,13 @@ export default function TopBar() {
   return (
     <header className="sticky top-0 z-10 w-full border-b border-ink-soft bg-ink">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-4 sm:px-8 lg:px-12">
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- intentionally
-            a plain anchor so the same-page click handler owns scrolling outright,
-            without next/link's own navigation/scroll handling fighting it */}
-        <a
+        <Link
           href="/#top"
           onClick={(e) => handleAnchorClick(e, "top")}
           className="font-heading text-base font-semibold text-offwhite transition-colors duration-300 hover:text-copper"
         >
           Arslan Asad Qazi
-        </a>
+        </Link>
 
         <nav className="order-3 w-full sm:order-2 sm:w-auto" aria-label="In-page">
           <ul className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs uppercase tracking-widest">
@@ -86,13 +84,13 @@ export default function TopBar() {
               }`;
               return (
                 <li key={item.label}>
-                  <a
+                  <Link
                     href={item.href}
                     onClick={isAnchorItem ? (e) => handleAnchorClick(e, item.sectionId) : undefined}
                     className={className}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               );
             })}
