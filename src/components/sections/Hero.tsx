@@ -18,7 +18,11 @@ export default function Hero() {
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             Final-year Computer Science student at FAST-NUCES Karachi,
             graduating June 2027. This site is one of the systems
-            I&apos;ve built, see how below.
+            I&apos;ve built,{" "}
+            <a href="#deployment" className="underline decoration-ink-soft underline-offset-2 transition-colors duration-300 hover:text-copper hover:decoration-copper">
+              see how below
+            </a>
+            .
           </p>
         </ScrollReveal>
 

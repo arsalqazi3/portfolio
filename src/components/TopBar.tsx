@@ -101,10 +101,11 @@ export default function TopBar() {
 
         <div className="order-2 flex items-center gap-3 sm:order-3">
           <a
-            href="#"
+            href="/resume/ArslanAsadQazi-Resume.pdf"
+            target="_blank"
+            rel="noreferrer noopener"
             className="rounded border border-copper px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-copper transition-all duration-300 hover:bg-copper hover:text-ink"
           >
-            {/* TODO: add resume PDF, currently a placeholder link */}
             Resume
           </a>
           <ul className="flex items-center gap-2">
