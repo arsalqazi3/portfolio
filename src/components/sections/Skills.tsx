@@ -95,7 +95,7 @@ const CATEGORIES: Category[] = [
       { name: "SonarQube (SAST)", icon: siSonarqubeserver },
       { name: "Snyk (SCA)", icon: siSnyk },
       { name: "Trivy", icon: siTrivy },
-      { name: "gitleaks" },
+      { name: "gitleaks", icon: { img: "/icons/gitleaks.png" } },
       { name: "OWASP ZAP (DAST)", icon: siOwasp },
     ],
   },
