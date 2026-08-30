@@ -23,8 +23,8 @@ export default function ProofGallery({ images, basePath, alt }: ProofGalleryProp
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") goPrev();
-      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") setIndex((i) => (i - 1 + total) % total);
+      if (e.key === "ArrowRight") setIndex((i) => (i + 1) % total);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);

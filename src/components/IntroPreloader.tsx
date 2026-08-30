@@ -21,7 +21,6 @@ const CURTAIN_MS = 850;
  * strand this open forever. Plain setInterval/setTimeout and CSS transitions
  * keep firing regardless, so the intro always finishes and hands the page back. */
 export default function IntroPreloader() {
-  const [mounted, setMounted] = useState(false);
   const [shouldPlay, setShouldPlay] = useState(false);
   const [phase, setPhase] = useState<"counting" | "name" | "lifting" | "done">("counting");
   const [counterValue, setCounterValue] = useState(0);
@@ -31,18 +30,23 @@ export default function IntroPreloader() {
   const interval = useRef<number>(0);
 
   useEffect(() => {
-    setMounted(true);
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const alreadyPlayed = sessionStorage.getItem(SESSION_KEY);
     if (reduceMotion || alreadyPlayed) return;
 
+    const timerIds = timers.current;
+
     sessionStorage.setItem(SESSION_KEY, "true");
+    // sessionStorage/matchMedia only exist client-side, so this can't be read
+    // during a lazy useState initializer without diverging from the server's
+    // render (a hydration mismatch) — it has to happen post-mount, in an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShouldPlay(true);
     document.body.style.overflow = "hidden";
 
     // Two-step so the browser paints width:0 before the transition to 100%
     // actually starts (setting it in the same tick would just snap, no animation).
-    timers.current.push(window.setTimeout(() => setBarActive(true), 20));
+    timerIds.push(window.setTimeout(() => setBarActive(true), 20));
 
     let step = 0;
     const totalSteps = Math.round(COUNTER_MS / COUNTER_STEP_MS);
@@ -51,10 +55,10 @@ export default function IntroPreloader() {
       setCounterValue(Math.min(100, Math.round((step / totalSteps) * 100)));
       if (step >= totalSteps) {
         window.clearInterval(interval.current);
-        timers.current.push(
+        timerIds.push(
           window.setTimeout(() => {
             setPhase("name");
-            timers.current.push(window.setTimeout(() => setPhase("lifting"), CURTAIN_DELAY_MS));
+            timerIds.push(window.setTimeout(() => setPhase("lifting"), CURTAIN_DELAY_MS));
           }, COUNTER_FADE_MS)
         );
       }
@@ -62,7 +66,7 @@ export default function IntroPreloader() {
 
     return () => {
       window.clearInterval(interval.current);
-      timers.current.forEach((id) => window.clearTimeout(id));
+      timerIds.forEach((id) => window.clearTimeout(id));
     };
   }, []);
 
@@ -75,7 +79,7 @@ export default function IntroPreloader() {
     return () => window.clearTimeout(id);
   }, [phase]);
 
-  if (!mounted || !shouldPlay || phase === "done") return null;
+  if (!shouldPlay || phase === "done") return null;
 
   return (
     <div
