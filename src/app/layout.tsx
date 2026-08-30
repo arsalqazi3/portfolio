@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Script from "next/script";
 import TopBar from "@/components/TopBar";
 import WebMeshBackground from "@/components/WebMeshBackground";
+import IntroPreloader from "@/components/IntroPreloader";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           strategy="afterInteractive"
         />
         <WebMeshBackground />
+        <IntroPreloader />
         <div className="relative z-10">
           <TopBar />
           {children}
