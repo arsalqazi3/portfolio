@@ -33,6 +33,7 @@ const generalSans = localFont({
 });
 
 const SITE_URL = "https://arslanasadqazi.is-a.dev";
+const PROFILE_IMAGE = { url: "/profile.png", width: 1994, height: 1694, alt: "Arslan Asad Qazi" };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -47,10 +48,12 @@ export const metadata: Metadata = {
       "Portfolio of Arslan Asad Qazi, a final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
     url: SITE_URL,
     siteName: "Arslan Asad Qazi",
+    images: [PROFILE_IMAGE],
     type: "website",
   },
   twitter: {
     card: "summary",
+    images: [PROFILE_IMAGE.url],
     title: "Arslan Asad Qazi, DevOps & Cloud Engineer",
     description:
       "Portfolio of Arslan Asad Qazi, a final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
@@ -63,6 +66,7 @@ const personJsonLd = {
   name: "Arslan Asad Qazi",
   alternateName: ["Arslan Qazi", "Arslan Asad"],
   url: SITE_URL,
+  image: `${SITE_URL}/profile.png`,
   jobTitle: "DevOps & Cloud Engineer",
   description:
     "Final-year Computer Science student focused on DevOps, Cloud, and DevSecOps engineering.",
