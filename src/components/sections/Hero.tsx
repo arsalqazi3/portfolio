@@ -29,11 +29,11 @@ export default function Hero() {
         <ScrollReveal delay={0} className="order-1 self-start sm:order-2 sm:self-center">
           <div className="relative aspect-square w-36 overflow-hidden rounded border border-ink-soft bg-ink-soft/40 sm:w-48 lg:w-56">
             <Image
-              src="/profile.jpg"
+              src="/profile.png"
               alt="Arslan Asad Qazi"
               fill
               sizes="(min-width: 1024px) 450px, (min-width: 640px) 380px, 300px"
-              quality={90}
+              quality={100}
               className="object-cover"
               priority
             />
