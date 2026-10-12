@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
@@ -24,7 +25,9 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const project = getProject(slug);
   if (!project) notFound();
 
-  const hasDemo = existsSync(path.join(process.cwd(), "public", "demos", project.demoFile));
+  const hasDemo =
+    project.demoFile !== undefined &&
+    existsSync(path.join(process.cwd(), "public", "demos", project.demoFile));
   const availableProofs = (project.proofs ?? []).filter((proof) =>
     existsSync(path.join(process.cwd(), "public", "proofs", project.slug, proof.file))
   );
@@ -80,11 +83,41 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         ))}
       </div>
 
+      {project.diagram && (
+        <div className="mt-10">
+          <p className="font-mono text-xs uppercase tracking-widest text-copper">Architecture</p>
+          <div className="mt-3 max-w-3xl rounded border border-ink-soft bg-ink-soft/20 p-4 sm:p-6">
+            <Image
+              src={`/diagrams/${project.diagram.file}`}
+              alt={project.diagram.alt}
+              width={780}
+              height={430}
+              unoptimized
+              className="h-auto w-full"
+            />
+          </div>
+        </div>
+      )}
+
       {project.highlights && (
         <div className="mt-8 max-w-2xl">
           <p className="text-xs text-muted/70">Highlights</p>
           <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-muted sm:text-base">
             {project.highlights.map((item) => (
+              <li key={item} className="flex gap-2.5">
+                <span className="mt-2 h-1 w-1 flex-none rounded-full bg-copper" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {project.challenges && (
+        <div className="mt-8 max-w-2xl">
+          <p className="text-xs text-muted/70">Challenges</p>
+          <ul className="mt-2 space-y-1.5 text-sm leading-relaxed text-muted sm:text-base">
+            {project.challenges.map((item) => (
               <li key={item} className="flex gap-2.5">
                 <span className="mt-2 h-1 w-1 flex-none rounded-full bg-copper" aria-hidden="true" />
                 {item}
@@ -117,7 +150,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
           )}
           {project.remaining && (
             <div>
-              <p className="text-muted/70">Remaining</p>
+              <p className="text-muted/70">Next steps</p>
               <ul className="mt-1 space-y-1 text-muted/60">
                 {project.remaining.map((item) => (
                   <li key={item}>{item}</li>
@@ -128,18 +161,20 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         </div>
       )}
 
-      <div className="mt-10">
-        <p className="font-mono text-xs uppercase tracking-widest text-copper">Demo</p>
-        {hasDemo ? (
-          <DemoVideo src={`/demos/${project.demoFile}`} />
-        ) : (
-          <div className="mt-3 flex aspect-video w-full items-center justify-center rounded border border-dashed border-ink-soft bg-ink-soft/20">
-            <p className="px-4 text-center text-xs text-muted/60 sm:text-sm">
-              Demo video coming soon, {project.demoFile}
-            </p>
-          </div>
-        )}
-      </div>
+      {project.demoFile && (
+        <div className="mt-10">
+          <p className="font-mono text-xs uppercase tracking-widest text-copper">Demo</p>
+          {hasDemo ? (
+            <DemoVideo src={`/demos/${project.demoFile}`} />
+          ) : (
+            <div className="mt-3 flex aspect-video w-full items-center justify-center rounded border border-dashed border-ink-soft bg-ink-soft/20">
+              <p className="px-4 text-center text-xs text-muted/60 sm:text-sm">
+                Demo video coming soon, {project.demoFile}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
