@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PROJECTS, getProject } from "@/data/projects";
@@ -28,6 +27,10 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
   const hasDemo =
     project.demoFile !== undefined &&
     existsSync(path.join(process.cwd(), "public", "demos", project.demoFile));
+  const diagramPath = project.diagram
+    ? path.join(process.cwd(), "public", "diagrams", project.diagram.file)
+    : null;
+  const diagramSvg = diagramPath && existsSync(diagramPath) ? readFileSync(diagramPath, "utf8") : null;
   const availableProofs = (project.proofs ?? []).filter((proof) =>
     existsSync(path.join(process.cwd(), "public", "proofs", project.slug, proof.file))
   );
@@ -83,19 +86,15 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
         ))}
       </div>
 
-      {project.diagram && (
+      {diagramSvg && project.diagram && (
         <div className="mt-10">
           <p className="font-mono text-xs uppercase tracking-widest text-copper">Architecture</p>
-          <div className="mt-3 max-w-3xl rounded border border-ink-soft bg-ink-soft/20 p-4 sm:p-6">
-            <Image
-              src={`/diagrams/${project.diagram.file}`}
-              alt={project.diagram.alt}
-              width={780}
-              height={430}
-              unoptimized
-              className="h-auto w-full"
-            />
-          </div>
+          {/* Inlined rather than <img> so the SVG's text picks up the site's own fonts. */}
+          <div
+            className="mt-3 w-full overflow-hidden rounded border border-ink-soft [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
+            dangerouslySetInnerHTML={{ __html: diagramSvg }}
+          />
+          <p className="sr-only">{project.diagram.alt}</p>
         </div>
       )}
 

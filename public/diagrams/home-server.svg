@@ -1,63 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="780" height="430" viewBox="0 0 780 430" role="img" aria-labelledby="title">
-  <title id="title">Home server architecture</title>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#9b9589"/>
-    </marker>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 1600 900" role="img" aria-labelledby="hs-title">
+<title id="hs-title">Home server architecture</title>
+<style>
+.t{font-family:var(--font-heading, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif)}
+.b{font-family:var(--font-body, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif)}
+.m{font-family:var(--font-mono, ui-monospace, Menlo, Consolas, monospace)}
+</style>
+<defs>
+<pattern id="hs-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#1c1c1a" stroke-width="1"/></pattern>
+<marker id="hs-arrow-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9b9589"/></marker>
+<marker id="hs-arrow-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b87333"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#141414"/>
+<rect width="1600" height="900" fill="url(#hs-grid)"/>
 
-  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="middle">
+<text x="48" y="168" class="m" font-size="20" letter-spacing="3" fill="#9b9589">MY DEVICES</text>
 
-    <!-- My devices -->
-    <text x="76" y="96" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b9589">MY DEVICES</text>
-    <rect x="16" y="110" width="120" height="46" rx="6" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="76" y="138" font-size="14" fill="#e8e3d8">Laptop</text>
-    <rect x="16" y="196" width="120" height="46" rx="6" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="76" y="224" font-size="14" fill="#e8e3d8">Phone</text>
+<rect x="48" y="190" width="280" height="130" rx="16" fill="#1a1a18" stroke="#3a3733" stroke-width="1.5"/>
+<rect x="80" y="220" width="108" height="70" rx="6" fill="#24201c" stroke="#9b9589" stroke-width="2"/>
+<polygon points="86,284 182,226 182,284" fill="#b87333" opacity="0.35"/>
+<path d="M66 296H202L194 306H74Z" fill="#9b9589"/>
+<text x="264" y="264" text-anchor="middle" class="t" font-size="25" font-weight="600" fill="#e8e3d8">Laptop</text>
 
-    <!-- Tailscale -->
-    <rect x="196" y="150" width="150" height="56" rx="6" fill="#1f1f1c" stroke="#b87333"/>
-    <text x="271" y="174" font-size="14" font-weight="600" fill="#e8e3d8">Tailscale</text>
-    <text x="271" y="193" font-size="11" fill="#9b9589">private access, HTTPS</text>
+<rect x="48" y="380" width="280" height="130" rx="16" fill="#1a1a18" stroke="#3a3733" stroke-width="1.5"/>
+<rect x="106" y="398" width="54" height="94" rx="11" fill="#24201c" stroke="#9b9589" stroke-width="2"/>
+<rect x="123" y="404" width="20" height="5" rx="2.5" fill="#9b9589"/>
+<polygon points="111,486 155,428 155,486" fill="#b87333" opacity="0.35"/>
+<text x="264" y="446" text-anchor="middle" class="t" font-size="25" font-weight="600" fill="#e8e3d8">Phone</text>
+<text x="264" y="474" text-anchor="middle" class="b" font-size="16" fill="#9b9589">iPhone, Android</text>
 
-    <line x1="136" y1="133" x2="194" y2="166" stroke="#9b9589" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line x1="136" y1="219" x2="194" y2="190" stroke="#9b9589" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line x1="346" y1="178" x2="382" y2="178" stroke="#9b9589" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="420" y="290" width="300" height="120" rx="16" fill="#1a1a18" stroke="#b87333" stroke-width="2.5"/>
+<rect x="446" y="318" width="64" height="64" rx="14.08" fill="#e8e3d8"/><g transform="translate(458.8,330.8) scale(1.5999999999999999)"><path d="M24 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-9 9a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm0-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM3 24a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm18 .5a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm9-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM3 5.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" fill="#242424"/></g>
+<text x="530" y="347" class="t" font-size="30" font-weight="600" fill="#e8e3d8">Tailscale</text>
+<text x="530" y="379" class="b" font-size="17" fill="#9b9589">private access, HTTPS</text>
 
-    <!-- Mac mini -->
-    <rect x="384" y="16" width="380" height="330" rx="8" fill="none" stroke="#9b9589"/>
-    <text x="400" y="40" text-anchor="start" font-size="13" font-weight="600" fill="#e8e3d8">Mac mini, Ubuntu 26.04 LTS</text>
-    <text x="400" y="57" text-anchor="start" font-size="11" fill="#9b9589">headless, on Ethernet</text>
+<line x1="328" y1="255" x2="416" y2="328" stroke="#9b9589" stroke-width="2.5" marker-end="url(#hs-arrow-m)"/>
+<line x1="328" y1="445" x2="416" y2="374" stroke="#9b9589" stroke-width="2.5" marker-end="url(#hs-arrow-m)"/>
+<line x1="720" y1="350" x2="798" y2="350" stroke="#9b9589" stroke-width="2.5" marker-end="url(#hs-arrow-m)"/>
 
-    <!-- Docker -->
-    <rect x="400" y="70" width="348" height="262" rx="6" fill="none" stroke="#3a3733" stroke-dasharray="5 4"/>
-    <text x="412" y="88" text-anchor="start" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="11" fill="#9b9589">DOCKER</text>
+<rect x="802" y="40" width="760" height="640" rx="22" fill="#171716" stroke="#b87333" stroke-opacity="0.6" stroke-width="2"/>
+<rect x="840" y="70" width="64" height="64" rx="14.08" fill="#e8e3d8"/><g transform="translate(852.8,82.8) scale(1.5999999999999999)"><path d="M17.61.455a3.41 3.41 0 0 0-3.41 3.41 3.41 3.41 0 0 0 3.41 3.41 3.41 3.41 0 0 0 3.41-3.41 3.41 3.41 0 0 0-3.41-3.41zM12.92.8C8.923.777 5.137 2.941 3.148 6.451a4.5 4.5 0 0 1 .26-.007 4.92 4.92 0 0 1 2.585.737A8.316 8.316 0 0 1 12.688 3.6 4.944 4.944 0 0 1 13.723.834 11.008 11.008 0 0 0 12.92.8zm9.226 4.994a4.915 4.915 0 0 1-1.918 2.246 8.36 8.36 0 0 1-.273 8.303 4.89 4.89 0 0 1 1.632 2.54 11.156 11.156 0 0 0 .559-13.089zM3.41 7.932A3.41 3.41 0 0 0 0 11.342a3.41 3.41 0 0 0 3.41 3.409 3.41 3.41 0 0 0 3.41-3.41 3.41 3.41 0 0 0-3.41-3.41zm2.027 7.866a4.908 4.908 0 0 1-2.915.358 11.1 11.1 0 0 0 7.991 6.698 11.234 11.234 0 0 0 2.422.249 4.879 4.879 0 0 1-.999-2.85 8.484 8.484 0 0 1-.836-.136 8.304 8.304 0 0 1-5.663-4.32zm11.405.928a3.41 3.41 0 0 0-3.41 3.41 3.41 3.41 0 0 0 3.41 3.41 3.41 3.41 0 0 0 3.41-3.41 3.41 3.41 0 0 0-3.41-3.41z" fill="#E95420"/></g>
+<text x="924" y="104" class="t" font-size="31" font-weight="600" fill="#e8e3d8">Mac mini, Ubuntu 26.04 LTS</text>
+<text x="924" y="137" class="b" font-size="19" fill="#9b9589">headless, on Ethernet</text>
 
-    <rect x="412" y="98" width="148" height="50" rx="5" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="486" y="119" font-size="13" fill="#e8e3d8">Immich</text>
-    <text x="486" y="136" font-size="11" fill="#9b9589">photos</text>
+<rect x="826" y="168" width="712" height="488" rx="14" fill="none" stroke="#b87333" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="9 7"/>
+<rect x="850" y="186" width="38" height="38" rx="8.36" fill="#e8e3d8"/><g transform="translate(857.6,193.6) scale(0.9500000000000001)"><path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z" fill="#2496ED"/></g>
+<text x="902" y="213" class="m" font-size="20" letter-spacing="3" fill="#b87333">DOCKER</text>
 
-    <rect x="590" y="98" width="148" height="50" rx="5" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="664" y="119" font-size="13" fill="#e8e3d8">Nextcloud</text>
-    <text x="664" y="136" font-size="11" fill="#9b9589">files, Postgres, Redis</text>
+<rect x="850" y="236" width="320" height="104" rx="14" fill="#1f1f1c" stroke="#3a3733" stroke-width="1.5"/><rect x="874" y="260" width="56" height="56" rx="12.32" fill="#e8e3d8"/><g transform="translate(885.2,271.2) scale(1.4000000000000001)"><path d="M11.9863.2695c-2.409 0-5.207 1.091-5.207 3.8946v.1523c1.3428.597 2.9347 1.6629 4.4121 2.9707 1.5713 1.3912 2.8374 2.8821 3.6524 4.2871 1.3997-2.5034 2.3358-5.4784 2.3476-7.373V4.164c0-2.8035-2.796-3.8946-5.205-3.8946m7.5117 4.4903c-.3778-.0081-.7747.0502-1.1914.1855-.0366.0118-.086.0278-.1445.0469-.1525 1.4611-.6756 3.304-1.4629 5.1133-.8373 1.9243-1.8627 3.5898-2.9472 4.7988 2.8132.558 5.9307.5273 7.7363-.0469.0126-.004.0246-.0065.0351-.0097 2.6665-.8666 2.84-3.8636 2.0957-6.1543-.6279-1.9332-2.081-3.89-4.121-3.9336m-14.996.039C2.4618 4.8424 1.0088 6.7973.3809 8.7305c-.7442 2.291-.5708 5.288 2.0957 6.1543l.1445.0468c.982-1.0926 2.4873-2.2761 4.1875-3.2773 1.8088-1.0646 3.619-1.808 5.207-2.1484-1.9483-2.1049-4.4884-3.9132-6.287-4.5098l-.0352-.0117c-.4167-.1354-.8136-.1936-1.1914-.1856m4.6718 6.7578c-2.6038 1.2025-5.1088 3.0598-6.2324 4.586l-.0215.0293c-1.6478 2.2683-.0272 4.7953 1.9219 6.211 1.9487 1.4159 4.8518 2.1765 6.5-.0919.0228-.0309.0536-.071.0898-.121-.7356-1.2717-1.396-3.0718-1.8222-4.9981-.4534-2.0492-.6023-4-.4356-5.6153m1.0723 3.338c.3387 2.8478 1.3315 5.8037 2.4355 7.3437l.0215.0293c1.6478 2.2683 4.551 1.5078 6.5.0918 1.9487-1.416 3.5697-3.943 1.9219-6.211-.0228-.0309-.0517-.073-.0879-.123-1.4367.3066-3.3522.3794-5.3164.1894-2.089-.2017-3.9895-.6623-5.4746-1.3203" fill="#4250AF"/></g><text x="950" y="283" class="t" font-size="25" font-weight="600" fill="#e8e3d8">Immich</text><text x="950" y="313" class="b" font-size="17" fill="#9b9589">photos</text>
+<rect x="1194" y="236" width="320" height="104" rx="14" fill="#1f1f1c" stroke="#3a3733" stroke-width="1.5"/><rect x="1218" y="260" width="56" height="56" rx="12.32" fill="#e8e3d8"/><g transform="translate(1229.2,271.2) scale(1.4000000000000001)"><path d="M12.018 6.537c-2.5 0-4.6 1.712-5.241 4.015-.56-1.232-1.793-2.105-3.225-2.105A3.569 3.569 0 0 0 0 12a3.569 3.569 0 0 0 3.552 3.553c1.432 0 2.664-.874 3.224-2.106.641 2.304 2.742 4.016 5.242 4.016 2.487 0 4.576-1.693 5.231-3.977.569 1.21 1.783 2.067 3.198 2.067A3.568 3.568 0 0 0 24 12a3.569 3.569 0 0 0-3.553-3.553c-1.416 0-2.63.858-3.199 2.067-.654-2.284-2.743-3.978-5.23-3.977zm0 2.085c1.878 0 3.378 1.5 3.378 3.378 0 1.878-1.5 3.378-3.378 3.378A3.362 3.362 0 0 1 8.641 12c0-1.878 1.5-3.378 3.377-3.378zm-8.466 1.91c.822 0 1.467.645 1.467 1.468s-.644 1.467-1.467 1.468A1.452 1.452 0 0 1 2.085 12c0-.823.644-1.467 1.467-1.467zm16.895 0c.823 0 1.468.645 1.468 1.468s-.645 1.468-1.468 1.468A1.452 1.452 0 0 1 18.98 12c0-.823.644-1.467 1.467-1.467z" fill="#0082C9"/></g><text x="1294" y="283" class="t" font-size="25" font-weight="600" fill="#e8e3d8">Nextcloud</text><text x="1294" y="313" class="b" font-size="17" fill="#9b9589">files, Postgres, Redis</text>
+<rect x="850" y="364" width="320" height="104" rx="14" fill="#1f1f1c" stroke="#3a3733" stroke-width="1.5"/><rect x="874" y="388" width="56" height="56" rx="12.32" fill="#e8e3d8"/><g transform="translate(885.2,399.2) scale(1.4000000000000001)"><path d="M12 0C8.249 0 3.725.861 0 2.755 0 6.845-.051 17.037 12 24 24.051 17.037 24 6.845 24 2.755 20.275.861 15.751 0 12 0zm-.106 15.429L6.857 9.612c.331-.239 1.75-1.143 2.794.042l2.187 2.588c.009-.001 5.801-5.948 5.815-5.938.246-.22.694-.503 1.204-.101l-6.963 9.226z" fill="#68BC71"/></g><text x="950" y="411" class="t" font-size="25" font-weight="600" fill="#e8e3d8">AdGuard Home</text><text x="950" y="441" class="b" font-size="17" fill="#9b9589">DNS ad blocking</text>
+<rect x="1194" y="364" width="320" height="104" rx="14" fill="#1f1f1c" stroke="#3a3733" stroke-width="1.5"/><rect x="1219" y="389" width="54" height="54" rx="12.32" fill="none" stroke="#b87333" stroke-width="2"/><text x="1246" y="425" text-anchor="middle" class="m" font-size="26" fill="#b87333">U</text><text x="1294" y="411" class="t" font-size="25" font-weight="600" fill="#e8e3d8">Unbound</text><text x="1294" y="441" class="b" font-size="17" fill="#9b9589">caching DNS resolver</text>
+<rect x="850" y="492" width="320" height="104" rx="14" fill="#1f1f1c" stroke="#3a3733" stroke-width="1.5"/><rect x="875" y="517" width="54" height="54" rx="12.32" fill="none" stroke="#b87333" stroke-width="2"/><text x="902" y="553" text-anchor="middle" class="m" font-size="26" fill="#b87333">H</text><text x="950" y="539" class="t" font-size="25" font-weight="600" fill="#e8e3d8">Hermes Agent</text><text x="950" y="569" class="b" font-size="17" fill="#9b9589">control from my phone</text>
 
-    <rect x="412" y="168" width="148" height="50" rx="5" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="486" y="189" font-size="13" fill="#e8e3d8">AdGuard Home</text>
-    <text x="486" y="206" font-size="11" fill="#9b9589">DNS ad blocking</text>
+<line x1="1170" y1="416" x2="1192" y2="416" stroke="#b87333" stroke-width="2.5" marker-end="url(#hs-arrow-c)"/>
+<line x1="1354" y1="468" x2="1354" y2="752" stroke="#b87333" stroke-width="2.5" marker-end="url(#hs-arrow-c)"/>
 
-    <rect x="590" y="168" width="148" height="50" rx="5" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="664" y="189" font-size="13" fill="#e8e3d8">Unbound</text>
-    <text x="664" y="206" font-size="11" fill="#9b9589">caching DNS resolver</text>
-
-    <rect x="412" y="238" width="148" height="50" rx="5" fill="#1f1f1c" stroke="#3a3733"/>
-    <text x="486" y="259" font-size="13" fill="#e8e3d8">Hermes Agent</text>
-    <text x="486" y="276" font-size="11" fill="#9b9589">control from my phone</text>
-
-    <line x1="560" y1="193" x2="588" y2="193" stroke="#b87333" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <line x1="664" y1="218" x2="664" y2="370" stroke="#b87333" stroke-width="1.5" marker-end="url(#arrow)"/>
-
-    <!-- Internet -->
-    <rect x="590" y="372" width="148" height="40" rx="6" fill="#1f1f1c" stroke="#b87333"/>
-    <text x="664" y="397" font-size="13" fill="#e8e3d8">Internet</text>
-  </g>
+<rect x="1194" y="756" width="320" height="100" rx="16" fill="#1a1a18" stroke="#b87333" stroke-width="2.5"/>
+<g fill="none" stroke="#b87333" stroke-width="2.5">
+<circle cx="1262" cy="806" r="27"/>
+<ellipse cx="1262" cy="806" rx="12" ry="27"/>
+<path d="M1235 806H1289M1240 792H1284M1240 820H1284"/>
+</g>
+<text x="1316" y="815" class="t" font-size="27" font-weight="600" fill="#e8e3d8">Internet</text>
 </svg>
