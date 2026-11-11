@@ -95,11 +95,12 @@ export const PROJECTS: Project[] = [
     summary:
       "An old 2014 Mac mini turned into a headless Ubuntu server that runs my own photo, file and DNS apps, and that I can manage securely from anywhere.",
     description: [
-      "I turned an old 2014 Mac mini into a headless home server. The goal is to replace my Google One subscription, so it's meant to hold the photos and files from my 3 Google accounts. It also blocks ads on my own devices with my own DNS, and I can reach and manage it securely from anywhere, including my phone.",
+      "I turned an old 2014 Mac mini into a headless home server. The goal is to replace my Google One subscription, so it's meant to hold the photos and files from my 3 Google accounts. Photos and Drive files from two of those accounts are now migrated into Immich and Nextcloud. It also blocks ads on my own devices with my own DNS, and I can reach and manage it securely from anywhere, including my phone.",
       "The hardware is small: a dual-core Intel i5, 8GB of RAM that's soldered on, so that's the ceiling, and a 256GB SSD. I wiped macOS, installed Ubuntu 26.04 LTS and turned off the desktop, so it boots straight to the command line and saves RAM. It runs headless on Ethernet, with mbpfan for proper Mac fan control and sleep and suspend turned off. It has a static IP on my home network, with a matching DHCP reservation on the router, so the address never clashes.",
-      "Every app runs in Docker. Immich is there to replace Google Photos, tuned for the weak CPU with lower job concurrency and video transcoding turned off. Nextcloud, with Postgres and Redis, is there to replace Google Drive, and I fixed its trusted-domain settings so it works properly. AdGuard Home blocks ads over DNS, but only on my own devices, so the rest of the household isn't affected. It forwards to Unbound, a caching DNS resolver on the same machine, with Cloudflare and Quad9 as fallback if Unbound fails. When I tested it with dig, cached lookups dropped to about 1ms, DNSSEC validation worked, and ad domains were still blocked.",
-      "I reach everything through Tailscale, with HTTPS on every app through tailscale serve, and I SSH in from my laptop or my iPhone (Termius, with its own key). SSH only takes keys, with password and root login turned off, and the server also runs UFW, fail2ban and automatic security upgrades. Load-shedding power cuts are common here, so a small systemd service turns the Mac back on after power loss.",
-      "Hermes Agent from Nous Research lets me control the server from my phone through a private Discord bot. I locked it down on purpose. Only my Discord user can talk to it, every action needs my approval, and a deny-list blocks sudo, destructive Docker volume commands, disabling or resetting the firewall, and taking Tailscale down or logging it out. Tools I don't use, like browser, vision, image generation and computer use, are turned off.",
+      "The main apps run in Docker. Immich is there to replace Google Photos, tuned for the weak CPU with lower job concurrency and video transcoding turned off. Nextcloud, with Postgres and Redis, is there to replace Google Drive, and I fixed its trusted-domain settings so it works properly. AdGuard Home blocks ads over DNS, but only on my own devices, so the rest of the household isn't affected. It forwards to Unbound, a caching DNS resolver on the same machine, with Cloudflare and Quad9 as fallback if Unbound fails. When I tested it with dig, cached lookups dropped to about 1ms, DNSSEC validation worked, and ad domains were still blocked.",
+      "I reach everything through Tailscale, with HTTPS for Immich and Nextcloud through tailscale serve, and I SSH in from my laptop or my iPhone (Termius, with its own key). SSH only takes keys, with password and root login turned off, and the server also runs UFW, fail2ban and automatic security upgrades. Load-shedding power cuts are common here, so a small systemd service turns the Mac back on after power loss.",
+      "Hermes Agent from Nous Research lets me control the server from my phone through a private Discord bot. It runs as a systemd user service on the host, not inside Docker. I locked it down on purpose. Only my Discord user can talk to it, every action needs my approval, and a deny-list blocks sudo, destructive Docker volume commands, disabling or resetting the firewall, and taking Tailscale down or logging it out. Tools I don't use, like browser, vision, image generation and computer use, are turned off.",
+      "For the migration, I downloaded the Google Takeout exports straight onto the server with wget, run as a systemd service so the downloads picked up again on their own after power cuts. I imported the photos into Immich with immich-go and copied the Drive files into Nextcloud. Then I ran Immich's Smart Search and Duplicate Detection and went through the duplicates myself.",
       "I ran every setup step myself on purpose, to learn real Linux and DevOps work instead of letting automation tools do it.",
     ],
     stack: [
@@ -124,7 +125,7 @@ export const PROJECTS: Project[] = [
     ],
     diagram: {
       file: "home-server.svg",
-      alt: "Home server architecture: my laptop and phone connect through Tailscale to the Mac mini running Ubuntu. Inside Docker it runs Immich, Nextcloud, AdGuard Home, Unbound and Hermes Agent. AdGuard Home forwards DNS to Unbound, which goes out to the internet.",
+      alt: "Home server architecture: my laptop and phone connect through Tailscale to the Mac mini running Ubuntu. Inside Docker it runs Immich, Nextcloud, AdGuard Home and Unbound. Hermes Agent runs on the host as a systemd user service, outside Docker. AdGuard Home forwards DNS to Unbound, which goes out to the internet.",
     },
     challenges: [
       "The Mac's Broadcom Wi-Fi had no driver after the install, so I got internet through Bluetooth tethering to my iPhone to install it.",
@@ -133,14 +134,10 @@ export const PROJECTS: Project[] = [
       "Power cuts kept taking the server and router down, so I added auto power-on after power loss. A UPS is next.",
       "Telegram signup in Pakistan wanted a paid SMS fee, so I used Discord for the agent instead.",
       "A YAML indentation bug in the Hermes config stopped the bot from connecting until I fixed it.",
+      "A power cut broke the Takeout download, and an expired session saved login pages under .zip names. I found the bad files by checking file types and checksums and re-downloaded what I could.",
+      "My laptop lagged on Wi-Fi when the server was down, because it depended on Tailscale DNS. I fixed it with a hosts file entry.",
     ],
-    remaining: [
-      "External backup drive, with restic backups on a timer",
-      "Import Google Takeout from all 3 accounts: photos into Immich with immich-go, files into Nextcloud",
-      "Test a full restore, then cancel Google One",
-      "A UPS for the router and Mac mini",
-      "WhatsApp backup, and a music library for Navidrome (set up, but paused for now)",
-    ],
+    remaining: ["There's still more I want to add and improve, so this is just the start."],
   },
 ];
 
