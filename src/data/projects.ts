@@ -91,7 +91,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "home-server",
     title: "Home Server: Self-Hosted Apps on Ubuntu",
-    status: "In Progress",
+    status: "Completed",
     summary:
       "An old 2014 Mac mini turned into a headless Ubuntu server that runs my own photo, file and DNS apps, and that I can manage securely from anywhere.",
     description: [
